@@ -1,0 +1,121 @@
+
+
+.Sidebar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 5px;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    z-index: 100;
+    background-image: linear-gradient(145deg, #11101d, #11103b);
+    transition: all 0.4s;
+}
+
+ .Sidebar.Collapsed {
+     margin-left: -200px;
+     padding-right: 15px;
+     
+    
+ }
+
+.Sidebar.Collapsed .Sidebar-Links .link {
+    flex-direction: row-reverse;
+    gap: 32px;
+}
+
+
+
+.Sidebar-Header {
+    background-color: rgba(54, 58, 64, 0.2);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    height: 60px;
+    width: 100%;
+    margin: 10px 5px;
+    border-radius: 1px;
+    border-bottom: lightgray 1px solid;
+    overflow: hidden;
+
+}
+/*Logo*/
+.Sidebar-Header i:nth-child(1)  {
+    color: rgba(40, 222, 64, 0.7);
+    font-size: 2.5rem;
+}
+
+
+.Sidebar i:nth-child(3) {
+    font-size: 2rem;
+    color: rgba(232, 232, 19, 0.8);
+    margin-left: 10px;
+}
+
+.Sidebar i:nth-child(3):hover {
+    cursor: pointer;
+    color: rgba(232, 232, 19, 0.9);
+    font-size: 2.1rem;
+}
+
+.Sidebar-Header .Sidebar-Brand {
+    font-size: 1.7rem;
+    color: rgba(40, 222, 64);
+    letter-spacing: 2px;
+    font-weight: bold;
+
+}
+
+.Sidebar-Body {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+
+
+}
+
+.Sidebar-Links{
+    display: inline-block;
+    padding-left: 20px;
+
+}
+
+.Sidebar-Links li {
+    list-style: none;
+    margin-bottom: 30px;
+
+
+}
+
+
+.Sidebar-Links .link {
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 25px;
+    color: white;
+    font-size: 1.5rem;
+    padding: 5px;
+}
+
+.Sidebar-Links .link:hover {
+    cursor: pointer;
+    background: rgba(38, 199, 81, 0.3);
+    border-radius: 1px;
+    
+
+}
+
+.Sidebar-Links .clicked {
+    background: rgba(38, 199, 81, 0.2);
+    border-bottom: rgb(40, 222, 64) 1px solid;
+    border-top: rgb(40, 222, 64) 1px solid;
+    margin-bottom: -1px;
+    margin-top: -1px;
+}

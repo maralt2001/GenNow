@@ -1,0 +1,10 @@
+{
+    "name": "gennow-server",
+    "version": "0.1.0",
+    "dependencies": {
+        "express": "^4.17.2"
+    },
+    "scripts": {
+        "start": "node ./src/app.js"
+    }
+}
