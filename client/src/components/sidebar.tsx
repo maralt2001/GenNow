@@ -8,38 +8,31 @@ const item3: LinkItem = {iconClass: "bx bx-data", linkName: "DataView"}
 export interface SidebarState {
 
     collapsed: boolean
-};
+}
 export class Sidebar extends React.Component {
     constructor(props:any) {
         super(props)
         this.state = {collapsed: false}
-        this.linkRef1 = React.createRef()
-        this.linkRef2 = React.createRef()
-        this.linkRef3 = React.createRef()
+        this.linkRefArray.push(React.createRef(),React.createRef(),React.createRef())
     }
     
     state: SidebarState;
-    linkRef1: React.RefObject<NavLink>
-    linkRef2: React.RefObject<NavLink>
-    linkRef3: React.RefObject<NavLink>
+    linkRefArray: React.RefObject<NavLink>[] = [];
 
-    
-
-    
     handleSidebarToggle():void {
         this.setState(() => {
             if(this.state.collapsed) {
+                this.linkRefArray.forEach(x => x.current?.handleCollapseSidebar(false))
              return (
                 {collapsed: false}
              )}
             else {
+                this.linkRefArray.forEach(x => x.current?.handleCollapseSidebar(true))
               return (
                 {collapsed: true}
               )}
         });
 
-        this.linkRef1.current?.handleLog("hello child1");
-       
     }
  
     render() {
@@ -53,9 +46,9 @@ export class Sidebar extends React.Component {
                 </div>
                 <div className="Sidebar-Body">
                     <ul className="Sidebar-Links">
-                        <NavLink {...item1} ref={this.linkRef1}/>
-                        <NavLink {...item2} ref={this.linkRef2}/>
-                        <NavLink {...item3} ref={this.linkRef3}/>
+                        <NavLink {...item1} ref={this.linkRefArray[0]}/>
+                        <NavLink {...item2} ref={this.linkRefArray[1]}/>
+                        <NavLink {...item3} ref={this.linkRefArray[2]}/>
                     </ul>
                 </div>
             </div>

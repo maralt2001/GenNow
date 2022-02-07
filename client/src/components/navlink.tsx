@@ -1,10 +1,11 @@
 
-import React, {useState} from "react";
+import React from "react";
+import {SidebarState} from "./sidebar";
+
 
 export interface LinkItem {
     iconClass: string
     linkName: string
-    
 }
 
 let lastClickedElement: HTMLDivElement[] = [];
@@ -16,15 +17,17 @@ export class NavLink extends React.Component {
     constructor(props:LinkItem) {
         super(props)
         this.item = props;
-        
+        this.state = {collapsed: false}
     }
-
     item:LinkItem;
+    state: SidebarState
 
-    handleLog = (m:string) => {
-        console.log(m);
+    handleCollapseSidebar = (status:boolean) => {
+        this.setState({collapsed: status})
     }
-    
+
+
+
 
     handleClick = (e:HTMLDivElement) => {
 
@@ -42,12 +45,16 @@ export class NavLink extends React.Component {
     };
 
     render() {
+        let linkObject;
+        if(!this.state.collapsed) {
+            linkObject = <span className="link-name">{this.item.linkName}</span>
+        }
         return(
-            <li>
+        <li>
             <div className="link" onClick={(e) => this.handleClick(e.currentTarget)}
                  ref={React.createRef<HTMLDivElement>()}>
                 <i className={this.item.iconClass}/>
-                <span className="link-name">{this.item.linkName}</span>
+                {linkObject}
             </div>
         </li>);
         

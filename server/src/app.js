@@ -6,9 +6,9 @@ const app = express();
 
 app.use(express.static('../client/build'));
 
-app.get('/', (req, res) => {
-    let resolevePath = path.resolve('../client/build');
-    res.sendFile(resolevePath, 'index.html')
+app.get('*', (req, res) => {
+    let resolvePath = path.resolve('../client/build');
+    res.sendFile(resolvePath, 'index.html')
     
 });
 
