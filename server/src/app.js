@@ -4,10 +4,13 @@ const path = require('path');
 
 const app = express();
 
-app.use(express.static('../client/build'));
+const pathWithoutDocker = '../client/build';
+const pathWithDocker = './client/build'
+
+app.use(express.static(pathWithDocker));
 
 app.get('*', (req, res) => {
-    let resolvePath = path.resolve('../client/build');
+    let resolvePath = path.resolve(pathWithDocker);
     res.sendFile(resolvePath, 'index.html')
     
 });
