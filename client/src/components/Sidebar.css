@@ -1,7 +1,12 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 :root {
     --background: linear-gradient(90deg,rgba(141, 148, 196, .70),rgba(141, 148, 196, .30));
+    --border-active-link: #5776d4;
+    --bg-color-hover-active: rgb(174, 184, 214);
+    --color-header-brand: rgba(78, 78, 237, 1);
+    --color-header-icon: rgba(78, 78, 237, 0.90);
+    --color-header-icon-hover: rgba(78, 78, 237, 1);
+    --color-link-item: rgba(36, 53, 105, 0.8);
 }
 
 *, *::before, *::after {
@@ -43,20 +48,20 @@
 }
 
 .Header-Brand {
-    color: rgba(78, 78, 237, 1);
+    color: var(--color-header-brand);
     font-weight: bold;
     font-size: 1.7rem;
 }
 
 .Header-Icon {
     font-size: 2.4rem;
-    color: rgba(78, 78, 237, 0.90);
+    color: var(--color-header-icon);
     transition: all 100ms ease-in-out;
 }
 
 .Header-Icon:hover {
     transform: scale(1.2);
-    color: rgba(78, 78, 237, 1);
+    color: var(--color-header-icon-hover);
     cursor: pointer;
 }
 
@@ -95,35 +100,33 @@
 
 .Link-Icon {
     font-size: 1.7em;
-    color: rgba(36, 53, 105, 0.8);
+    color: var(--color-link-item);
 }
 
 .Link-Text {
     font-size: 1.5em;
-    color: rgba(36, 53, 105, 0.8);
+    color: var(--color-link-item);
     font-weight: bold;
-
 }
 
 .Link:hover {
     cursor: pointer;
-    border-bottom: 1px solid #5776d4;
-    border-top: 1px solid #5776d4;
+    border-bottom: 1px solid var(--border-active-link);
+    border-top: 1px solid var(--border-active-link);
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    background-color: rgb(174, 184, 214);
-    margin-bottom: -1px;
-    margin-top: -1px;
+    background-color: var(--bg-color-hover-active);
+    margin-block: -1px;
+
 }
 
 .LinkActive {
-    border-bottom: 1px solid #5776d4;
-    border-top: 1px solid #5776d4;
-    border-right: 1px solid #5776d4;
+    border-bottom: 1px solid var(--border-active-link);
+    border-top: 1px solid var(--border-active-link);
+    border-right: 1px solid var(--border-active-link);
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    background-color: rgb(174, 184, 214);
-    margin-bottom: -1px;
-    margin-top: -1px;
+    background-color: var(--bg-color-hover-active);
+    margin-block: -1px;
 
 }

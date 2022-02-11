@@ -10,7 +10,11 @@ class Sidebar extends React.Component {
         super(props);
         this.elements = props;
         this.state = {collapsed: false}
-        this.linkRefArray.push(React.createRef<HTMLDivElement>(),React.createRef<HTMLDivElement>(),React.createRef<HTMLDivElement>())
+        this.linkRefArray.push(
+            React.createRef<HTMLDivElement>(),
+            React.createRef<HTMLDivElement>(),
+            React.createRef<HTMLDivElement>()
+        );
     }
 
     elements:any;
@@ -55,15 +59,18 @@ class Sidebar extends React.Component {
                        <i className="bx bx-menu Header-Icon" onClick={() => this.handleMenuToggle()}/>
                    </div>
                    <div className="Sidebar-Body">
-                        <div className="Link" ref={this.linkRefArray[0]} onClick={(e) => this.handleClickedLink(e.currentTarget)}>
+                        <div className="Link" ref={this.linkRefArray[0]}
+                             onClick={(e) => this.handleClickedLink(e.currentTarget)}>
                             <i className="bx bx-home Link-Icon"/>
                             <span className="Link-Text">Home</span>
                         </div>
-                       <div className="Link" ref={this.linkRefArray[1]} onClick={(e) => this.handleClickedLink(e.currentTarget)}>
+                       <div className="Link" ref={this.linkRefArray[1]}
+                            onClick={(e) => this.handleClickedLink(e.currentTarget)}>
                             <i className="bx bx-import Link-Icon"/>
                             <span className="Link-Text">Import</span>
                        </div>
-                       <div className="Link" ref={this.linkRefArray[3]} onClick={(e) => this.handleClickedLink(e.currentTarget)}>
+                       <div className="Link" ref={this.linkRefArray[3]}
+                            onClick={(e) => this.handleClickedLink(e.currentTarget)}>
                             <i className="bx bx-data Link-Icon"/>
                             <span className="Link-Text">ViewData</span>
                        </div>
