@@ -1,0 +1,129 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+:root {
+    --background: linear-gradient(90deg,rgba(141, 148, 196, .70),rgba(141, 148, 196, .30));
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+.Sidebar-Wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 10px 5px;
+    width: 200px;
+    height: 100vh;
+    background: var(--background);
+    transition: width 200ms ease-in-out;
+}
+
+.Sidebar-Wrapper.Collapsed {
+    width: 50px;
+}
+
+.Sidebar-Wrapper.Collapsed .Sidebar-Header {
+    justify-content: flex-end;
+    padding-right: 0;
+}
+
+/* Overflow hidden because Sidebar can collapse */
+.Sidebar-Header {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding-inline: 10px;
+    background: rgba(141, 148, 196, .05);
+    border-bottom: 2px solid lightgray;
+    gap: 22px;
+    overflow-x: hidden;
+}
+
+.Header-Brand {
+    color: rgba(78, 78, 237, 1);
+    font-weight: bold;
+    font-size: 1.7rem;
+}
+
+.Header-Icon {
+    font-size: 2.4rem;
+    color: rgba(78, 78, 237, 0.90);
+    transition: all 100ms ease-in-out;
+}
+
+.Header-Icon:hover {
+    transform: scale(1.2);
+    color: rgba(78, 78, 237, 1);
+    cursor: pointer;
+}
+
+.Sidebar-Body {
+    position: relative;
+    display: flex;
+    top: 100px;
+    bottom: 50px;
+    padding-left: 15px;
+    padding-block: 5px;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 40px;
+    overflow-x: hidden;
+}
+
+.Sidebar-Body .Link {
+    position: relative;
+    display: flex;
+    padding-right: 25px;
+    padding-block: 5px;
+    flex-direction: row;
+    align-items: center;
+    gap: 17px;
+
+}
+
+.Sidebar-Wrapper.Collapsed .Sidebar-Body .Link {
+    flex-direction: row-reverse;
+    padding-right: 3px;
+}
+
+.Sidebar-Wrapper.Collapsed .Sidebar-Body {
+    padding-left: 2px;
+}
+
+.Link-Icon {
+    font-size: 1.7em;
+    color: rgba(36, 53, 105, 0.8);
+}
+
+.Link-Text {
+    font-size: 1.5em;
+    color: rgba(36, 53, 105, 0.8);
+    font-weight: bold;
+
+}
+
+.Link:hover {
+    cursor: pointer;
+    border-bottom: 1px solid #5776d4;
+    border-top: 1px solid #5776d4;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: rgb(174, 184, 214);
+    margin-bottom: -1px;
+    margin-top: -1px;
+}
+
+.LinkActive {
+    border-bottom: 1px solid #5776d4;
+    border-top: 1px solid #5776d4;
+    border-right: 1px solid #5776d4;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: rgb(174, 184, 214);
+    margin-bottom: -1px;
+    margin-top: -1px;
+
+}
