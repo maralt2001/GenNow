@@ -1,6 +1,7 @@
 
 import React, {RefObject} from 'react';
 
+
 interface SidebarState {
     collapsed: boolean
 }
@@ -24,12 +25,15 @@ class Sidebar extends React.Component {
 
     handleMenuToggle() {
         this.setState((status:SidebarState) => {
+
             if(status.collapsed) {
+
                 return (
                     {collapsed: false}
                 )
             }
             else {
+
                 return (
                     {collapsed: true}
                 )
@@ -59,20 +63,23 @@ class Sidebar extends React.Component {
                        <i className="bx bx-menu Header-Icon" onClick={() => this.handleMenuToggle()}/>
                    </div>
                    <div className="Sidebar-Body">
-                        <div className="Link" ref={this.linkRefArray[0]}
+                        <div className="Link"
+                             ref={this.linkRefArray[0]}
                              onClick={(e) => this.handleClickedLink(e.currentTarget)}>
                             <i className="bx bx-home Link-Icon"/>
-                            <span className="Link-Text">Home</span>
+                            {!this.state.collapsed && <span className="Link-Text">Home</span>}
                         </div>
-                       <div className="Link" ref={this.linkRefArray[1]}
+                       <div className="Link"
+                            ref={this.linkRefArray[1]}
                             onClick={(e) => this.handleClickedLink(e.currentTarget)}>
                             <i className="bx bx-import Link-Icon"/>
-                            <span className="Link-Text">Import</span>
+                            {!this.state.collapsed && <span className="Link-Text">Import</span>}
                        </div>
-                       <div className="Link" ref={this.linkRefArray[3]}
+                       <div className="Link"
+                            ref={this.linkRefArray[3]}
                             onClick={(e) => this.handleClickedLink(e.currentTarget)}>
                             <i className="bx bx-data Link-Icon"/>
-                            <span className="Link-Text">ViewData</span>
+                            {!this.state.collapsed && <span className="Link-Text">ViewData</span>}
                        </div>
                    </div>
                </nav>
@@ -82,3 +89,5 @@ class Sidebar extends React.Component {
 }
 
 export {Sidebar}
+
+//TODO Check Props of Sidebar

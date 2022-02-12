@@ -1,20 +1,11 @@
 .App {
   font-family: 'Poppins', sans-serif;
-  display: inline-block;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
