@@ -24,7 +24,7 @@
     height: 100vh;
     background: var(--background);
     transition: width 200ms ease-in-out;
-    overflow-x: hidden;
+
 }
 
 .Sidebar-Wrapper.Collapsed {
@@ -35,7 +35,7 @@
     justify-content: flex-end;
     flex-direction: row-reverse;
     padding-inline: 0;
-    width: var(--sidebar-width-collapsed);
+    width: 45px ;
 }
 
 .Sidebar-Wrapper.Collapsed .Sidebar-Body {

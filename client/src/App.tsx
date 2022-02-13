@@ -4,6 +4,7 @@ import {Sidebar} from "./components/Sidebar";
 import './components/Sidebar.css'
 import {ContentContainer} from "./components/ContentContainer";
 import './components/ContentContainer.css'
+import './components/Headerbar.css'
 
 
 function App() {

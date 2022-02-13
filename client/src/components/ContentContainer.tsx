@@ -1,27 +1,25 @@
 
 import React from 'react';
 import { createGlobalState } from 'react-hooks-global-state';
+import {Header} from "./Headerbar";
 
-const initialState = { count: 0 };
+const initialState = { index: 0 };
 const { useGlobalState } = createGlobalState(initialState);
 
 
 
 
 function ContentContainer() {
-    const [count, setCount] = useGlobalState('count');
+    const [index,] = useGlobalState('index');
     return (
+    <div className="Content-Wrapper">
+       <Header data={index}/>
+    </div>
 
-        <div>
-            <span>Counter: {count}</span>
-            {/* update state by passing callback function */}
-            <button onClick={() => setCount(v => v + 1)}>+1</button>
-            {/* update state by passing new value */}
-            <button onClick={() => setCount(count - 1)}>-1</button>
-        </div>
+
     )
 }
 
 
 
-export {ContentContainer}
+export {ContentContainer, useGlobalState}
