@@ -4,9 +4,8 @@
     position: relative;
     display: flex;
     flex-direction: row;
-    flex-grow: 1;
     height: 40px;
-    background: linear-gradient(-90deg, rgba(211, 216, 224, .90),rgba(211, 216, 224, .50));
+    background: linear-gradient(-90deg, rgba(211, 216, 224, .90),rgba(211, 216, 240, .50));
     justify-content: flex-end;
     align-items: center;
     padding-inline: 20px;
