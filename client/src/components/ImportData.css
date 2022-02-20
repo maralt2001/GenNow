@@ -57,3 +57,98 @@
     border: 1px solid gray;
     padding: 3px 7px;
 }
+
+.Import-Preview {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 50em;
+    min-height: 35em;
+    margin-top: 1em;
+    background-color: rgba(12, 46, 99, 0.2);
+
+    border-radius: 3px;
+}
+
+.Import-Preview-Header {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    width: 50em;
+    height: 2em;
+    border-bottom: 2px solid gainsboro;
+    background-color: rgba(12, 46, 99, 0.5);
+    padding-left: 1em;
+    gap: 20px;
+
+}
+
+.Import-Preview-Header span {
+    color: rgba(211, 216, 224);
+    font-weight: bold;
+
+}
+
+.Import-Preview-Body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 35em;
+    margin-top: 3em;
+    padding-left: 0.5em;
+    padding-right: 1em;
+    overflow-x: hidden;
+    overflow-y: auto;
+    gap: 0.5em;
+}
+
+.Prev-DataItem-Container {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    height: 40px;
+    border-radius: 10px;
+    align-items: center;
+
+}
+
+.Prev-DataItem-Container:hover {
+    cursor: pointer;
+
+}
+
+.Prev-DataItem-Key-Container {
+    display: flex;
+    height: 100%;
+    min-width: 24em;
+    max-width: 24em;
+    min-height: 2em;
+    max-height: 2em;
+    align-items: center;
+    background-color: rgba(22, 25, 46, 0.6);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-right: 2px solid gainsboro;
+    padding-left: 15px;
+    color: gainsboro;
+    overflow-x: hidden;
+
+}
+
+.Prev-DataItem-Value-Container {
+    display: flex;
+    min-height: 2em;
+    max-width: 24em;
+    min-width: 24em;
+    background-color: rgba(22, 25, 46, 0.8);
+    align-items: center;
+    padding-left: 15px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    color: gainsboro;
+}
+
+
+
+
