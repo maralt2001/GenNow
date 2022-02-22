@@ -89,6 +89,17 @@
     font-weight: bold;
 
 }
+.Import-Preview-Header-Trash {
+    display: flex;
+    font-size: 1.5em;
+    margin-right: .5em;
+    margin-left: auto;
+}
+
+.Import-Preview-Header-Trash:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+}
 
 .Import-Preview-Body {
     display: flex;
@@ -115,38 +126,44 @@
 
 .Prev-DataItem-Container:hover {
     cursor: pointer;
-
 }
+
+.Prev-DataItem-Container.Selected {
+    opacity: .4;
+}
+
+
 
 .Prev-DataItem-Key-Container {
     display: flex;
-    height: 100%;
-    min-width: 24em;
-    max-width: 24em;
+    color: gainsboro;
+    align-items: center;
+    padding-left: 15px;
     min-height: 2em;
     max-height: 2em;
-    align-items: center;
+    max-width: 24em;
+    min-width: 24em;
+
     background-color: rgba(22, 25, 46, 0.6);
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     border-right: 2px solid gainsboro;
-    padding-left: 15px;
-    color: gainsboro;
     overflow-x: hidden;
 
 }
 
 .Prev-DataItem-Value-Container {
     display: flex;
+    color: gainsboro;
+    align-items: center;
+    padding-left: 15px;
     min-height: 2em;
     max-width: 24em;
     min-width: 24em;
     background-color: rgba(22, 25, 46, 0.8);
-    align-items: center;
-    padding-left: 15px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-    color: gainsboro;
+
 }
 
 

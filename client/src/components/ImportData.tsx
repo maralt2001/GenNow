@@ -1,11 +1,12 @@
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {loadFile, separator, createArrayConfItems} from "../data/LoadFile";
 
 
 interface ConfItems {
     key: string
     value: string
+    selected?: boolean
 }
 
 const ImportData = () => {
@@ -26,11 +27,53 @@ const ImportData = () => {
     }
 
     function handleClickItem(e:HTMLDivElement, index:number) {
-        setFileContent((items) =>items.filter((element,pos) => pos !== index) );
+
+        //setFileContent((items) =>items.filter((element,pos) => pos !== index) );
+        if(e.className === 'Prev-DataItem-Container') {
+            e.className = 'Prev-DataItem-Container Selected'
+            let newState = [...fileContent];
+            newState[index].selected = true;
+            setFileContent(newState);
+            setCountSelected(countSelected + 1);
+
+        }
+
+        else {
+            e.className = 'Prev-DataItem-Container'
+            let newState = [...fileContent];
+            newState[index].selected = false;
+            setFileContent(newState)
+            setCountSelected(countSelected - 1)
+        }
+
+    }
+
+    function  handleClickTrash() {
+
+        if(countSelected > 0)
+        {
+            setFileContent((items) => items.filter((element) =>
+                element.selected === false || element.selected === undefined));
+            let tagged = document.querySelectorAll(".Prev-DataItem-Container.Selected");
+            [].forEach.call(tagged, (el:HTMLDivElement) => el.className = 'Prev-DataItem-Container');
+            setCountSelected(0);
+        }
+
+            let input = document.querySelector('input');
+            if(input && input.files?.length) {
+                input.value = '';
+            }
     }
 
     const [fileName, setFileName] = useState('none')
     const [fileContent, setFileContent] = useState(new Array<ConfItems>());
+    const [countSelected, setCountSelected] = useState(0);
+
+
+    useEffect(() => {
+
+    },[fileContent])
+
 
     return (
         <div className="ImportData-Wrapper">
@@ -39,12 +82,14 @@ const ImportData = () => {
             </div>
             <div className="Import-Body">
                 <i className="bx bxs-file-import Open-Icon" onClick={() => fileInput.current?.click()}/>
-                {fileName !== 'none' && <span className="File-Item">{fileName}</span>}
+                {fileName !== 'none' && fileContent.length !== 0 && <span className="File-Item">{fileName}</span>}
             </div>
                 {fileContent.length !== 0 && <div className="Import-Preview">
                     <div className="Import-Preview-Header">
                         <span>Data Preview</span>
                         <span>Current: {fileContent.length}</span>
+                        <span>Selected: {countSelected}</span>
+                        <i className="bx bxs-trash-alt Import-Preview-Header-Trash" onClick={() => handleClickTrash()}/>
                     </div>
                     <div className="Import-Preview-Body">
                         <React.Fragment>
