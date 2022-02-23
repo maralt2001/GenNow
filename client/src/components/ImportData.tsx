@@ -3,7 +3,9 @@ import React, {useEffect, useState} from "react";
 import {loadFile, separator, createArrayConfItems} from "../data/LoadFile";
 
 
+
 interface ConfItems {
+    id: string
     key: string
     value: string
     selected?: boolean
@@ -54,8 +56,6 @@ const ImportData = () => {
         {
             setFileContent((items) => items.filter((element) =>
                 element.selected === false || element.selected === undefined));
-            let tagged = document.querySelectorAll(".Prev-DataItem-Container.Selected");
-            [].forEach.call(tagged, (el:HTMLDivElement) => el.className = 'Prev-DataItem-Container');
             setCountSelected(0);
         }
 
@@ -89,11 +89,16 @@ const ImportData = () => {
                         <span>Data Preview</span>
                         <span>Current: {fileContent.length}</span>
                         <span>Selected: {countSelected}</span>
-                        <i className="bx bxs-trash-alt Import-Preview-Header-Trash" onClick={() => handleClickTrash()}/>
+                        <button
+                            className="Import-Preview-Header-Del-Button"
+                            onClick={() => handleClickTrash()}>
+                            DEL selected
+                        </button>
                     </div>
                     <div className="Import-Preview-Body">
                         <React.Fragment>
-                            {fileContent.map(item => <div key={fileContent.indexOf(item)}
+                            {fileContent.map(item => <div
+                                              key={item.id}
                                               className="Prev-DataItem-Container"
                                               ref={React.createRef}
                                               onClick={(e) =>

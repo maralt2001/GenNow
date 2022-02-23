@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    flex-wrap: wrap;
     align-items: center;
     height: 100%;
     margin-top: 6rem;
@@ -85,20 +86,33 @@
 }
 
 .Import-Preview-Header span {
+
     color: rgba(211, 216, 224);
     font-weight: bold;
 
 }
-.Import-Preview-Header-Trash {
+.Import-Preview-Header-Del-Button {
     display: flex;
-    font-size: 1.5em;
-    margin-right: .5em;
+    font-size: 1em;
+    margin-right: 1em;
     margin-left: auto;
+    border: 1px solid gainsboro;
+    border-radius: 8px;
+    color: gainsboro;
+    background: none;
+    opacity: 0.65;
+
 }
 
-.Import-Preview-Header-Trash:hover {
+.Import-Preview-Header-Del-Button:hover {
     cursor: pointer;
-    transform: scale(1.2);
+    color: #73e038;
+    border: 2px solid  #73e038;
+    opacity: 1;
+
+
+
+
 }
 
 .Import-Preview-Body {

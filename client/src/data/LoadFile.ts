@@ -1,4 +1,5 @@
 import {ConfItems} from "../components/ImportData";
+import {v4 } from 'uuid'
 
 // Load File from Input HTML Element type file
 function loadFile(element:HTMLInputElement):Promise<string> {
@@ -36,7 +37,8 @@ function separator(input:string, sep:string):Array<string[]> {
 function createArrayConfItems(items: Array<string[]>): Array<ConfItems> {
     let container: Array<ConfItems> = [];
     for(let i = 0; i < items.length; i++) {
-        container.push({key: items[i][0],value: items[i][1]})
+
+        container.push({id: v4(), key: items[i][0],value: items[i][1]})
     }
     return container;
 }
