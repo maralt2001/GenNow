@@ -4,15 +4,17 @@ const path = require('path');
 
 const app = express();
 
-const pathWithoutDocker = '../client/build';
+const pathWithoutDocker = path.join(__dirname, '../../client/build')
+
 const pathWithDocker = './client/build'
 
 app.use(express.static(pathWithDocker));
 
-app.get('*', (req, res) => {
-    let resolvePath = path.resolve(pathWithDocker);
-    res.sendFile(resolvePath, 'index.html')
-    
+app.get('/gennow', (req, res) => {
+
+    let file = path.resolve(pathWithDocker, 'index.html')
+    res.sendFile(file)
+
 });
 
 const PORT = process.env.PORT || 5000;
