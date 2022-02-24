@@ -4,7 +4,7 @@ const path = require('path');
 
 const app = express();
 
-const pathWithoutDocker = path.join(__dirname, '../../client/build')
+//const pathWithoutDocker = path.join(__dirname, '../../client/build')
 
 const pathWithDocker = './client/build'
 
