@@ -9,7 +9,7 @@
     "787.c4e7f8f9.chunk.js.map": "/gennow/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
-    "/gennow/static/css/main.b813b847.css",
-    "/gennow/static/js/main.42443853.js"
+    "static/css/main.b813b847.css",
+    "static/js/main.42443853.js"
   ]
 }
