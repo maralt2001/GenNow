@@ -1,0 +1,61 @@
+
+.Home {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+    margin-top: 6rem;
+    gap: 5em;
+
+}
+
+.Home-Card-One, .Home-Card-Two, .Home-Card-Three {
+    display: flex;
+    flex-direction: column;
+}
+
+.Home-Card-Two:hover, .Home-Card-Three:hover {
+    cursor: pointer;
+    opacity: 0.9;
+
+}
+
+.Home-Card-One-Header, .Home-Card-Two-Header, .Home-Card-Three-Header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1em;
+    width: 20em;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background-color: rgba(12, 46, 99, 0.7);
+    box-shadow: 0 0 1em gray;
+}
+
+.Home-Card-One-Header i {
+    font-size: 4em;
+    color: red;
+}
+
+.Home-Card-Two-Header i {
+    font-size: 4em;
+    color: limegreen;
+}
+
+.Home-Card-Three-Header i {
+    font-size: 4em;
+    color: rebeccapurple;
+}
+
+.Home-Card-One-Header span, .Home-Card-Two-Header span, .Home-Card-Three-Header span {
+    font-size: 2em;
+    color: whitesmoke;
+}
+

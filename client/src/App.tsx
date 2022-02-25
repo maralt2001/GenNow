@@ -6,6 +6,7 @@ import {ContentContainer} from "./components/ContentContainer";
 import './components/ContentContainer.css'
 import './components/Headerbar.css'
 import  './components/ImportData.css'
+import './components/Home.css'
 
 
 function App() {
