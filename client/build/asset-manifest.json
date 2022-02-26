@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/gennow/static/css/main.a1e5284f.css",
-    "main.js": "/gennow/static/js/main.52c8971f.js",
+    "main.css": "/gennow/static/css/main.4b5f051a.css",
+    "main.js": "/gennow/static/js/main.fef38917.js",
     "static/js/787.c4e7f8f9.chunk.js": "/gennow/static/js/787.c4e7f8f9.chunk.js",
+    "static/media/lucas-unsplash.jpg": "/gennow/static/media/lucas-unsplash.c55aeaaf4a996fa7414f.jpg",
     "index.html": "/gennow/index.html",
-    "main.a1e5284f.css.map": "/gennow/static/css/main.a1e5284f.css.map",
-    "main.52c8971f.js.map": "/gennow/static/js/main.52c8971f.js.map",
+    "main.4b5f051a.css.map": "/gennow/static/css/main.4b5f051a.css.map",
+    "main.fef38917.js.map": "/gennow/static/js/main.fef38917.js.map",
     "787.c4e7f8f9.chunk.js.map": "/gennow/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a1e5284f.css",
-    "static/js/main.52c8971f.js"
+    "static/css/main.4b5f051a.css",
+    "static/js/main.fef38917.js"
   ]
 }
