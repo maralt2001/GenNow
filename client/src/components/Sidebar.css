@@ -1,6 +1,6 @@
 
 :root {
-    --background: linear-gradient(90deg,rgba(141, 148, 196, .70),rgba(141, 148, 196, .30));
+    --background: linear-gradient(90deg,rgba(141, 148, 196, .90),rgba(141, 148, 196, .40));
     --border-active-link: #5776d4;
     --bg-color-hover-active: rgb(174, 184, 214);
     --color-header-brand: rgba(78, 78, 237, 1);

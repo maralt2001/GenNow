@@ -6,21 +6,15 @@
     justify-content: center;
     flex-wrap: wrap;
     align-items: flex-start;
-    height: 100%;
+    height: 60%;
     width: 100%;
-    margin-top: 6rem;
-    gap: 5em;
-
+    margin-top: 6em;
+    gap: 6em;
 }
 
 .Home-Card-One, .Home-Card-Two, .Home-Card-Three {
     display: flex;
     flex-direction: column;
-}
-
-.Home-Card-Two:hover, .Home-Card-Three:hover {
-    cursor: pointer;
-    opacity: 0.9;
 
 }
 
@@ -30,32 +24,88 @@
     justify-content: flex-start;
     align-items: center;
     gap: 1em;
-    width: 20em;
+    width: 25em;
     padding-left: 1em;
     padding-right: 1em;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     background-color: rgba(12, 46, 99, 0.7);
     box-shadow: 0 0 1em gray;
+    border-bottom: 1px solid gainsboro;
 }
 
 .Home-Card-One-Header i {
-    font-size: 4em;
+    font-size: 3.5em;
     color: red;
 }
 
 .Home-Card-Two-Header i {
-    font-size: 4em;
+    font-size: 3.5em;
     color: limegreen;
 }
 
 .Home-Card-Three-Header i {
-    font-size: 4em;
+    font-size: 3.5em;
     color: rebeccapurple;
 }
 
+.Home-Card-Two-Header i:hover, .Home-Card-Three i:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.Home-Card-One-Header .Expand {
+    font-size: 1.5em;
+    color: gainsboro;
+    margin-left: auto;
+}
+
+.Home-Card-Two-Header .Expand {
+    font-size: 1.5em;
+    color: gainsboro;
+    margin-left: auto;
+}
+
+.Home-Card-Three-Header .Expand {
+    font-size: 1.5em;
+    color: gainsboro;
+    margin-left: auto;
+}
+
+
+
 .Home-Card-One-Header span, .Home-Card-Two-Header span, .Home-Card-Three-Header span {
-    font-size: 2em;
+    font-size: 1.5em;
     color: whitesmoke;
 }
+
+.Home-Card-One-Body, .Home-Card-Two-Body, .Home-Card-Three-Body {
+    display: none;
+    width: 25em;
+    max-height: 20em;
+    background-color: rgba(12, 46, 99, 0.2);
+    overflow: hidden;
+
+}
+
+.Active {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding-top: 2em;
+    padding-bottom: 1em;
+    padding-inline: 1em;
+}
+
+.Home-Card-Two-Body i, .Home-Card-Three-Body i {
+    font-size: 2em;
+}
+
+.Home-Card-Two-Body i:hover, .Home-Card-Three-Body i:hover {
+
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+
 

@@ -13,9 +13,8 @@
 .Import-Header {
     width: 50em;
     height: 2em;
-
     display: flex;
-    background-color: rgba(12, 46, 99, 0.7);
+    background-color: rgba(12, 46, 99, 0.6);
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
     border-bottom: 1px solid gainsboro;

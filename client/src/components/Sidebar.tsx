@@ -6,10 +6,10 @@ import {useGlobalState} from "./ContentContainer";
 export const Sidebar = () => {
     // internal Component State
     const [collapsed, setCollapsed] = useState(false);
-    const [clickedLinkIndex, setClickedLinkIndex] = useState(0)
+
+
     const [currentActiveLink, setCurrentActiveLink] = useState({} as HTMLDivElement)
     const container = useRef<HTMLDivElement>(null)
-
     // Global App State
     const [LinkNumberGlobal,setLinkNumberGlobal] = useGlobalState('index');
     const [globalSetter,setGlobalSetter] = useGlobalState('setter')
@@ -24,7 +24,7 @@ export const Sidebar = () => {
     }
 
     function handleClickedLink(index:number,e:HTMLDivElement) {
-        setClickedLinkIndex(index);
+
         if(currentActiveLink) {
             currentActiveLink.className = "Link";
             e.className = "Link LinkActive"
