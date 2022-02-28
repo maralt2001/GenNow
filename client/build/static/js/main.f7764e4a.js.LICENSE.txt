@@ -4,6 +4,14 @@ object-assign
 @license MIT
 */
 
+/*! 
+ * Voca string library 1.4.0
+ * https://vocajs.com
+ *
+ * Copyright Dmitri Pavlutin and other contributors
+ * Released under the MIT license
+ */
+
 /** @license React v0.20.2
  * scheduler.production.min.js
  *
