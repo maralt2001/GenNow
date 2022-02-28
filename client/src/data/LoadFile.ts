@@ -1,5 +1,6 @@
 import {ConfItems} from "../components/ImportData";
 import {v4 } from 'uuid'
+import voca from 'voca'
 
 // Load File from Input HTML Element type file
 function loadFile(element:HTMLInputElement):Promise<string> {
@@ -21,17 +22,21 @@ function loadFile(element:HTMLInputElement):Promise<string> {
 // First remove line breaks and white space, second split by separator. Returns Array<string[]>
 function separator(input:string, sep:string):Array<string[]> {
 
-
     try {
-        let filter_1 = input.replace(/(\r\n|\n|\r)/gm, " ");
-        let filter_2 = filter_1.split(' ').filter(item => item !== "");
-        return filter_2.map(item => item.split(sep))
+        //separate string by line breaks
+        let slb = voca.split(input, '\n')
+        // delete white spaces
+        let noWhiteSpace = slb.map(item => voca.trim(item))
+        let deleteEmpty = noWhiteSpace.filter(item => item !== '')
+        //separate by equal
+        return deleteEmpty.map(item => voca.split(item,sep))
     }
     catch {
         return [];
     }
-
 }
+
+
 
 // Iterate of every entry in outer array, item set as Type ConfItems
 function createArrayConfItems(items: Array<string[]>): Array<ConfItems> {
