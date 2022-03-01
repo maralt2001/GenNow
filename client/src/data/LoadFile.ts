@@ -36,6 +36,20 @@ function separator(input:string, sep:string):Array<string[]> {
     }
 }
 
+function separation(input:string, sep:string):Promise<Array<string[]>> {
+    return new Promise((resolve, reject) => {
+        try {
+            let slb = voca.split(input, '\n')
+            let noWhiteSpace = slb.map(item => voca.trim(item))
+            let deleteEmpty = noWhiteSpace.filter(item => item !== '')
+            resolve(deleteEmpty.map(item => voca.split(item,sep)))
+        }
+       catch (err) {
+            reject(err);
+       }
+    });
+}
+
 
 
 // Iterate of every entry in outer array, item set as Type ConfItems
@@ -49,4 +63,4 @@ function createArrayConfItems(items: Array<string[]>): Array<ConfItems> {
 }
 
 
-export {loadFile,separator, createArrayConfItems}
+export {loadFile,separator,separation, createArrayConfItems}

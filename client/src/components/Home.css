@@ -29,7 +29,7 @@
     padding-right: 1em;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
-    background-color: rgba(12, 46, 99, 0.7);
+    background-color: rgba(28, 36, 97, 0.8);
     box-shadow: 0 0 1em gray;
     border-bottom: 1px solid gainsboro;
 }
@@ -55,7 +55,7 @@
 
 .Home-Card-Three-Header i {
     font-size: 3.5em;
-    color: rebeccapurple;
+    color: #720dbf;
 }
 
 .Home-Card-Two-Header i:hover, .Home-Card-Three i:hover {
