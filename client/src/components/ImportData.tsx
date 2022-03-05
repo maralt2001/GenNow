@@ -1,14 +1,17 @@
 
 import React, {useEffect, useState} from "react";
 import {loadFile, separator, createArrayConfItems} from "../data/LoadFile";
-
+import {useGlobalState} from "./ContentContainer";
 
 
 interface ConfItems {
     id: string
+    origin: string
+    alias?: string
+    selected?: boolean
     key: string
     value: string
-    selected?: boolean
+
 }
 
 const ImportData = () => {
@@ -17,15 +20,17 @@ const ImportData = () => {
 
     function handleFileSelect(e:HTMLInputElement) {
         if(e.files) {
-            setFileName(e.files[0].name);
-            loadFile(e).then((result) => setFileContent(generateMap(result)))
+            let origin = e.files[0].name;
+            setFileName(origin);
+            loadFile(e).then((result) => setFileContent(generateMap(result,origin)))
                        .catch((err) => console.log(err));
         }
     }
 
-    function generateMap(fileString:string):Array<ConfItems> {
+    function generateMap(fileString:string, originFile:string):ConfItems[] {
+
         let result = separator(fileString, '=');
-        return createArrayConfItems(result)
+        return createArrayConfItems(result,originFile)
     }
 
     function handleClickItem(e:HTMLDivElement, index:number) {
@@ -65,9 +70,19 @@ const ImportData = () => {
             }
     }
 
+    function handleTransferData() {
+        setIndex(3);
+        setSetter('Import');
+        setData(fileContent);
+    }
+    //local states
     const [fileName, setFileName] = useState('none')
     const [fileContent, setFileContent] = useState(new Array<ConfItems>());
     const [countSelected, setCountSelected] = useState(0);
+    //global states
+    const [,setIndex] = useGlobalState('index');
+    const [,setSetter] = useGlobalState('setter')
+    const [,setData] = useGlobalState('data')
 
 
     useEffect(() => {
@@ -93,6 +108,11 @@ const ImportData = () => {
                             className="Import-Preview-Header-Del-Button"
                             onClick={() => handleClickTrash()}>
                             DEL selected
+                        </button>
+                        <button
+                            className="Import-Preview-Header-Trans-Button"
+                            onClick={() => handleTransferData()}>
+                            Transfer to Data View
                         </button>
                     </div>
                     <div className="Import-Preview-Body">

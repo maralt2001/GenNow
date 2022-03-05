@@ -7,6 +7,7 @@ import './components/ContentContainer.css'
 import './components/Headerbar.css'
 import  './components/ImportData.css'
 import './components/Home.css'
+import './components/Data.css'
 
 
 function App() {

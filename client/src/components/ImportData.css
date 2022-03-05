@@ -39,7 +39,6 @@
     padding-top: 4px;
     padding-bottom: 4px;
     align-items: center;
-   
     border-bottom-right-radius: 2px;
     border-bottom-left-radius: 2px;
     gap: 50px;
@@ -66,7 +65,7 @@
 }
 
 .File-Item {
-    font-size: 1.8em;
+    font-size: 1.4em;
     background-color: rgba(211, 216, 224, .80);
     border-radius: 5px;
     border: 1px solid gray;
@@ -105,7 +104,7 @@
     font-weight: bold;
 
 }
-.Import-Preview-Header-Del-Button {
+.Import-Preview-Header-Del-Button, .Import-Preview-Header-Trans-Button {
     display: flex;
     font-size: 1em;
     margin-right: 1em;
@@ -118,7 +117,7 @@
 
 }
 
-.Import-Preview-Header-Del-Button:hover {
+.Import-Preview-Header-Del-Button:hover, .Import-Preview-Header-Trans-Button:hover {
     cursor: pointer;
     color: #73e038;
     border: 2px solid  #73e038;
@@ -136,17 +135,19 @@
     padding-right: 1em;
     overflow-x: hidden;
     overflow-y: auto;
-    gap: 0.5em;
+    gap: 0.3em;
+    padding-top: 5px;
 }
 
 .Prev-DataItem-Container {
     display: flex;
     flex-direction: row;
     position: relative;
-    height: 40px;
+    height: 30px;
     border-radius: 10px;
     align-items: center;
     justify-content: center;
+
 
 }
 
@@ -169,12 +170,12 @@
     max-height: 2em;
     max-width: 28em;
     min-width: 28em;
-
     background-color: rgba(22, 25, 46, 0.6);
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     border-right: 2px solid gainsboro;
     overflow-x: hidden;
+
 
 }
 
@@ -189,6 +190,8 @@
     background-color: rgba(22, 25, 46, 0.8);
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+    overflow-x: hidden;
+
 
 }
 

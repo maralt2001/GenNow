@@ -45,10 +45,11 @@ export const Sidebar = () => {
     // Called when Component is rerender
     useEffect(() => {
 
-        if(globalSetter === 'Home') {
+        if(globalSetter === 'Home' || globalSetter === 'Import') {
             handleChangeSetter(LinkNumberGlobal);
             setGlobalSetter('none')
         }
+
 
 
     },[LinkNumberGlobal,globalSetter, setGlobalSetter]);
@@ -77,7 +78,7 @@ export const Sidebar = () => {
                           ref={React.createRef<HTMLDivElement>()}
                           onClick={(e) => handleClickedLink(3,e.currentTarget)}>
                         <i className="bx bx-data Link-Icon"/>
-                        {!collapsed && <span className="Link-Text">ViewData</span> }
+                        {!collapsed && <span className="Link-Text">Data</span> }
                     </div>
                 </div>
             </nav>
