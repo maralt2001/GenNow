@@ -67,6 +67,9 @@
 .File-Item {
     font-size: 1.4em;
     background-color: rgba(211, 216, 224, .80);
+    max-width: 15em;
+    text-overflow: ellipsis;
+    overflow: hidden;
     border-radius: 5px;
     border: 1px solid gray;
     padding: 3px 7px;

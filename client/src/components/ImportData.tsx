@@ -3,14 +3,17 @@ import React, {useEffect, useState} from "react";
 import {loadFile, separator, createArrayConfItems} from "../data/LoadFile";
 import {useGlobalState} from "./ContentContainer";
 
-
-interface ConfItems {
+interface ConfItemsMeta {
     id: string
     origin: string
     alias?: string
+}
+
+interface ConfItems {
     selected?: boolean
     key: string
     value: string
+    meta: ConfItemsMeta
 
 }
 
@@ -118,7 +121,7 @@ const ImportData = () => {
                     <div className="Import-Preview-Body">
                         <React.Fragment>
                             {fileContent.map(item => <div
-                                              key={item.id}
+                                              key={item.meta.id}
                                               className="Prev-DataItem-Container"
                                               ref={React.createRef}
                                               onClick={(e) =>
@@ -146,4 +149,4 @@ const ImportData = () => {
 }
 
 export {ImportData};
-export type { ConfItems };
+export type { ConfItems, ConfItemsMeta };

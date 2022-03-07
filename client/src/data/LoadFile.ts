@@ -50,22 +50,17 @@ function separation(input:string, sep:string):Promise<Array<string[]>> {
     });
 }
 
-
-
 // Iterate of every entry in outer array, item set as Type ConfItems
 function createArrayConfItems(items: Array<string[]>,fileName:string): Array<ConfItems> {
     let container: Array<ConfItems> = [];
     for(let i = 0; i < items.length; i++) {
-
-        container.push({id: v4(), origin:fileName, key: items[i][0],value: items[i][1]})
-
+        container.push({meta: {id: v4(), origin: fileName}, key: items[i][0],value: items[i][1]})
     }
-
     return container;
 }
 
 function checkArrayDiffOrig(items: ConfItems[]):string[] {
-   return items.map(item => item.origin).filter((val,index,self) => self.indexOf(val) === index )
+   return items.map(item => item.meta.origin).filter((val,index,self) => self.indexOf(val) === index )
 
 }
 
