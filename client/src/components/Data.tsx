@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {ConfItems} from "./ImportData";
 import {useGlobalState} from "./ContentContainer";
 import styled from "styled-components";
-import {checkArrayDiffOrig} from "../data/LoadFile";
+import {checkArrayDiffOrig,setPrefixConfItems} from "../data/LoadFile";
 import {v4 } from 'uuid'
 
 interface ActiveSpan {
@@ -78,6 +78,7 @@ const Data = () => {
     //local state
     const [diffOrigin] = useState(checkArrayDiffOrig(data))
     const [activeItems, setActiveItems] = useState(new Array<string>())
+    const [tempData, setTempData] = useState(new Array<ConfItems>())
 
 
 
@@ -94,6 +95,12 @@ const Data = () => {
            elements.push(item.innerText)
            setActiveItems(elements)
        }
+       let result = setPrefixConfItems(data)
+       let temp = result.filter(item => item.meta.prefix !== "" &&
+                                        item.meta.prefix !== undefined)
+                        .map(item => item)
+        setTempData(temp)
+
 
     }
     //Component unmount
@@ -106,8 +113,8 @@ const Data = () => {
     },[setData]);
 
     useEffect(() => {
-
-    },[activeItems])
+        console.log(tempData)
+    },[tempData])
 
     return (
         <DataWrapper className="Data-Wrapper">

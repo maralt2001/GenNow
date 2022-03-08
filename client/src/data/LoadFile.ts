@@ -64,5 +64,15 @@ function checkArrayDiffOrig(items: ConfItems[]):string[] {
 
 }
 
+function setPrefixConfItems(items: ConfItems[]): ConfItems[] {
+    //match digits from start ends with underline (positive lookahead)
+    let regex = new RegExp('^\\d*(?=_)');
+    items.forEach((ele,index) => {
+        regex.exec(ele.key)?.map(e => items[index].meta.prefix = e)
+    })
 
-export {loadFile,separator,separation, createArrayConfItems, checkArrayDiffOrig}
+    return items
+}
+
+
+export {loadFile,separator,separation, createArrayConfItems, checkArrayDiffOrig, setPrefixConfItems}

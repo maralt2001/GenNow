@@ -7,6 +7,7 @@ interface ConfItemsMeta {
     id: string
     origin: string
     alias?: string
+    prefix?: string
 }
 
 interface ConfItems {
