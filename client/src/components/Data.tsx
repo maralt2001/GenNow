@@ -187,7 +187,7 @@ const Data = () => {
 
     function handleClickDataItem(itemID:string) {
         setDataItemClicked(itemID)
-        console.log(data)
+
     }
 
 
