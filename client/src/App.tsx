@@ -10,12 +10,14 @@ import './components/Home.css'
 
 
 
+
+
 function App() {
   return (
-      <div className="App">
-        <Sidebar/>
-        <ContentContainer/>
-      </div>
+          <div className="App">
+              <Sidebar/>
+              <ContentContainer/>
+          </div>
   );
 }
 

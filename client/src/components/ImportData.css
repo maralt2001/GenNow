@@ -92,10 +92,11 @@
     flex-direction: row;
     align-items: center;
     width: 60em;
-    height: 2em;
+    height: 3em;
     border-bottom: 2px solid gainsboro;
     background-color: rgba(28, 36, 97, 0.8);
     padding-left: 1em;
+    padding-right: 1em;
     padding-block: 1px;
     gap: 20px;
 
@@ -107,25 +108,11 @@
     font-weight: bold;
 
 }
-.Import-Preview-Header-Del-Button, .Import-Preview-Header-Trans-Button {
-    display: flex;
-    font-size: 1em;
-    margin-right: 1em;
+
+.Header-Button-Stack {
     margin-left: auto;
-    border: 1px solid gainsboro;
-    border-radius: 8px;
-    color: gainsboro;
-    background: none;
-    opacity: 0.65;
-
 }
 
-.Import-Preview-Header-Del-Button:hover, .Import-Preview-Header-Trans-Button:hover {
-    cursor: pointer;
-    color: #73e038;
-    border: 2px solid  #73e038;
-    opacity: 1;
-}
 
 .Import-Preview-Body {
     display: flex;

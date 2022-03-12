@@ -3,6 +3,11 @@ import React, {useEffect, useState} from "react";
 import {loadFile, separator, createArrayConfItems} from "../data/LoadFile";
 import {useGlobalState} from "./ContentContainer";
 
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SendIcon from '@mui/icons-material/Send';
+import Stack from '@mui/material/Stack';
+
 interface ConfItemsMeta {
     id: string
     origin: string
@@ -108,16 +113,22 @@ const ImportData = () => {
                         <span>Data Preview</span>
                         <span>Current: {fileContent.length}</span>
                         <span>Selected: {countSelected}</span>
-                        <button
-                            className="Import-Preview-Header-Del-Button"
-                            onClick={() => handleClickTrash()}>
-                            DEL selected
-                        </button>
-                        <button
-                            className="Import-Preview-Header-Trans-Button"
-                            onClick={() => handleTransferData()}>
-                            Transfer to Data View
-                        </button>
+                        <Stack className="Header-Button-Stack" direction="row" spacing={4}>
+                            <Button variant="contained"
+                                    size="small"
+                                    color="error"
+                                    startIcon={<DeleteIcon/>}
+                                    onClick={() => handleClickTrash()}>
+                                Delete selected
+                            </Button>
+                            <Button variant="contained"
+                                    size="small"
+                                    endIcon={<SendIcon/>}
+                                    color="secondary"
+                                    onClick={() => handleTransferData()}>
+                                Send to Data
+                            </Button>
+                        </Stack>
                     </div>
                     <div className="Import-Preview-Body">
                         <React.Fragment>
