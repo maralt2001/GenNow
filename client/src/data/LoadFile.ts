@@ -65,8 +65,8 @@ function checkArrayDiffOrig(items: ConfItems[]):string[] {
 }
 
 function setPrefixConfItems(items: ConfItems[]): ConfItems[] {
-    //match digits from start ends with underline (positive lookahead)
-    let regex = new RegExp('^\\d*(?=_)');
+    //match only digits (without white space) from start and ends with underline (positive lookahead)
+    let regex = new RegExp('[^\\n]\\d*(?=_)');
     items.forEach((ele,index) => {
         regex.exec(ele.key)?.map(e => items[index].meta.prefix = e)
     })

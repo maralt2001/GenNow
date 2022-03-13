@@ -13,6 +13,7 @@ interface ConfItemsMeta {
     origin: string
     alias?: string
     prefix?: string
+    column?: string
 }
 
 interface ConfItems {
