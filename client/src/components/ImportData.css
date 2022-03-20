@@ -4,25 +4,29 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    flex-wrap: nowrap;
-    align-items: center;
-    overflow-x: hidden;
-    height: 90vh;
-    margin-top: 4rem;
-    padding-bottom: 5em;
+    align-items: flex-start;
+    height: 70%;
+    padding-inline: 20%;
+    margin-top: 5%;
+}
+
+.Import {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
 }
 
 .Import-Header {
-    width: 60em;
-    height: 2em;
     display: flex;
-    flex-shrink: 3;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     background-color: rgba(28, 36, 97, 0.8);
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
     border-bottom: 1px solid gainsboro;
     padding-inline: 15px;
-    align-items: center;
+
 }
 
 .Import-Header-Text {
@@ -31,17 +35,19 @@
 }
 
 .Import-Body {
-    width: 60em;
-    height: 3.5em;
     display: flex;
-    background-color: rgba(17, 54, 140, 0.4);
+    flex-direction: row;
+    justify-content: flex-start;
+    background-color: rgba(17, 54, 140, 0.5);
     padding-inline: 15px;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     align-items: center;
     border-bottom-right-radius: 2px;
     border-bottom-left-radius: 2px;
-    gap: 50px;
+    border-bottom: 2px solid gainsboro;
+    gap: 10px;
+
 
 }
 
@@ -67,9 +73,9 @@
 .File-Item {
     font-size: 1.4em;
     background-color: rgba(211, 216, 224, .80);
-    max-width: 15em;
+    overflow-x: hidden;
     text-overflow: ellipsis;
-    overflow: hidden;
+    text-align: center;
     border-radius: 5px;
     border: 1px solid gray;
     padding: 3px 7px;
@@ -78,35 +84,9 @@
 .Import-Preview {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    width: 60em;
-    min-height: 45em;
-    margin-top: 2em;
+    align-self: stretch;
     background-color: rgba(17, 54, 140, 0.3);
     border-radius: 3px;
-}
-
-.Import-Preview-Header {
-    display: flex;
-    position: relative;
-    flex-direction: row;
-    align-items: center;
-    width: 60em;
-    height: 3em;
-    border-bottom: 2px solid gainsboro;
-    background-color: rgba(28, 36, 97, 0.8);
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-block: 1px;
-    gap: 20px;
-
-}
-
-.Import-Preview-Header span {
-
-    color: rgba(211, 216, 224);
-    font-weight: bold;
-
 }
 
 .Header-Button-Stack {
@@ -118,27 +98,21 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 40em;
-    margin-top: 3em;
+    height: 35em;
+    margin-top: 1em;
     margin-bottom: 0.5em;
     padding-left: 1em;
     padding-right: 1em;
-    overflow-x: hidden;
     overflow-y: auto;
     gap: 0.3em;
     padding-top: 5px;
+
 }
 
 .Prev-DataItem-Container {
     display: flex;
     flex-direction: row;
-    position: relative;
-    height: 30px;
-    border-radius: 10px;
-    align-items: center;
-    justify-content: center;
-
-
+    justify-content: flex-start;
 }
 
 .Prev-DataItem-Container:hover {
@@ -153,34 +127,33 @@
 
 .Prev-DataItem-Key-Container {
     display: flex;
+    flex-grow: 1;
+    flex-basis: 50%;
     color: gainsboro;
     align-items: center;
-    padding-left: 15px;
-    min-height: 2em;
-    max-height: 2em;
-    max-width: 28em;
-    min-width: 28em;
+    padding-left: 1%;
+    padding-block: .25%;
     background-color: rgba(22, 25, 46, 0.6);
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    border-radius: 10px;
     border-right: 2px solid gainsboro;
-    overflow-x: hidden;
+
 
 
 }
 
 .Prev-DataItem-Value-Container {
     display: flex;
+    flex-grow: 1;
+    flex-basis: 50%;
     color: gainsboro;
     align-items: center;
-    padding-left: 15px;
-    min-height: 2em;
-    max-width: 30em;
-    min-width: 30em;
-    background-color: rgba(22, 25, 46, 0.8);
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    padding-left: 1%;
+    padding-block: .25%;
+    text-overflow: ellipsis;
     overflow-x: hidden;
+    background-color: rgba(22, 25, 46, 0.8);
+    border-radius: 10px;
+
 
 
 }

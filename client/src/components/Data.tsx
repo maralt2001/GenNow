@@ -6,18 +6,12 @@ import {checkArrayDiffOrig,setPrefixConfItems} from "../data/LoadFile";
 import {v4 } from 'uuid'
 import {DataItem} from "./DataItem";
 
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-
+/*MaterialUI*/
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-
+import {Container, Stack, Box, TextField, CssBaseline, Accordion, AccordionSummary, AccordionDetails, IconButton}
+    from '@mui/material';
 
 interface ActiveSpan {
     active: boolean
@@ -28,51 +22,33 @@ const DataWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  flex-wrap: nowrap;
   align-items: flex-start;
-  overflow-x: hidden;
-  height: 90vh;
-  margin-top: 2rem;
-  padding-bottom: 5em;
-  padding-inline: 10px;
+  height: 100%;
+  padding-inline: 10%;
+  margin-top: 5%;
 `
 const DataHeader = styled.div`
-  position: sticky;
+  
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  padding-inline: 2em;
-  padding-block: 3px;
-  background-color: rgba(28, 36, 97, 0.6);
-  border-radius: 5px;
-  gap: 1em;
+  padding-inline: 15px;
+  padding-block: 4px;
+  background-color: rgba(28, 36, 97, 0.8);
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  
 `
 const DataBody = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  padding-top: 1em;
-  width: 60%;
+  width: 70%;
 `
-const DataContent = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-`
-const DataContentMeta = styled.div`
-  position: relative;
-  display: flex;
-  margin-top: 4em;
-  margin-left: 2em;
-  padding-top: 1em;
-  height: 44em;
-  width: 25%;
-  padding-inline: 1em;
-  background-color: rgba(28, 36, 97, 0.2);
-`
+
+
 const DataHeaderOriginText = styled.span`
   color: gainsboro;
   font-size: 1em;
@@ -98,7 +74,6 @@ const DataItemContainerBody = styled.div`
   flex-direction: column;
   position: relative;
   height: 40em;
-  margin-top: 1em;
   margin-bottom: 0.5em;
   padding-left: 0.5em;
   padding-right: 0.5em;
@@ -165,9 +140,6 @@ const Data = () => {
             }
     }
 
-
-
-
     //Component unmount
     useEffect(() => {
 
@@ -181,48 +153,57 @@ const Data = () => {
 
     return (
         <DataWrapper className="Data-Wrapper">
-            {data.length !== 0 && <DataHeader>
-                <DataHeaderOriginText className="Data-Header-Text">Available Data(Origin):</DataHeaderOriginText>
-                {diffOrigin.length > 0?
-                    diffOrigin.map(item =>
-                        <DataHeaderOriginItem
-                            active={activeItems.includes(item)}
-                            onClick={(e) => handleClickOriginItem(e.currentTarget)}
-                            key={v4()}
-                            >
-                            {item}
-                        </DataHeaderOriginItem>)
-                :"empty"}
-            </DataHeader>}
-            <DataContent>
-            <DataBody>
-            {activeItems.length > 0 && activeItems.map(item =>
-                <React.Fragment key={v4()}>
-                    <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
-                        <AccordionSummary expandIcon={<ExpandMoreIcon/>}
-                                          aria-controls="panel1aContent"
-                                          id="panel1aHeader">
-                        <p style={{margin:0, color: "rgba(28, 36, 97,1)"}}>Data({activeItems.indexOf(item) +1})</p>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            {!activeFilter &&
-                            <DataItemContainerBody>
-                                {data.filter(ele => ele.meta.origin === item).map(e =>
-                                   <DataItem item={e} onClickItem={(id) => handleClickDataItem(id)} key={e.meta.id}/>
-                                )}
-                            </DataItemContainerBody>}
-                            {activeFilter &&
-                            <DataItemContainerBody>
-                                {dataFiltered.map(e =>
-                                    <DataItem item={e} onClickItem={(id) => handleClickDataItem(id)} key={e.meta.id}/>
-                                )}
-                            </DataItemContainerBody>}
-                        </AccordionDetails>
-                    </Accordion>
-                </React.Fragment>)}
-                </DataBody>
-                <DataContentMeta>
-                    <Box sx={{ width: 500}}>
+            <CssBaseline/>
+            {/* Header */}
+            <Container maxWidth="xl">
+                {data.length !== 0 && <DataHeader>
+                    <Stack direction="row" spacing={3} alignItems={"center"}>
+                        <DataHeaderOriginText>Available Data(Origin):</DataHeaderOriginText>
+                        {diffOrigin.length > 0?
+                            diffOrigin.map(item =>
+                                <DataHeaderOriginItem
+                                    active={activeItems.includes(item)}
+                                    onClick={(e) => handleClickOriginItem(e.currentTarget)}
+                                    key={v4()}
+                                >
+                                    {item}
+                                </DataHeaderOriginItem>)
+                            :"empty"}
+                    </Stack>
+                </DataHeader>}
+            </Container>
+            {/* Data Items & Meta */}
+            <Container maxWidth="xl">
+                <Stack direction="row" spacing={1} borderTop={2} borderColor={"grey.100"} >
+                    <DataBody>
+                    {activeItems.length > 0 && activeItems.map(item =>
+                        <React.Fragment key={v4()}>
+                            <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
+                                <AccordionSummary expandIcon={<ExpandMoreIcon/>}
+                                                  aria-controls="panel1aContent"
+                                                  id="panel1aHeader">
+                                <p style={{margin:0, color: "rgba(28, 36, 97,1)"}}>Data({activeItems.indexOf(item) +1})</p>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    {!activeFilter &&
+                                    <DataItemContainerBody>
+                                        {data.filter(ele => ele.meta.origin === item).map(e =>
+                                           <DataItem item={e} onClickItem={(id) => handleClickDataItem(id)} key={e.meta.id}/>
+                                        )}
+                                    </DataItemContainerBody>}
+                                    {activeFilter &&
+                                    <DataItemContainerBody>
+                                        {dataFiltered.map(e =>
+                                            <DataItem item={e} onClickItem={(id) => handleClickDataItem(id)} key={e.meta.id}/>
+                                        )}
+                                    </DataItemContainerBody>}
+                                </AccordionDetails>
+                            </Accordion>
+                        </React.Fragment>)}
+                        </DataBody>
+
+                <Stack direction="column" padding={2} bgcolor={"whitesmoke"} overflow={"hidden"}>
+                    <Box sx={{maxWidth: 500}}>
                         <TextField disabled
                                    id="outlined-disabled"
                                    size="small"
@@ -237,56 +218,55 @@ const Data = () => {
                                    fullWidth
                                    value={data.filter(item => item.meta.id === dataItemClicked).map(item => item.meta.origin)}/>
                         <Stack direction="row" spacing={1}>
-                            <TextField disabled
-                                       id="field-alias"
-                                       size="small"
-                                       label="alias"
-                                       margin="normal"
-                                       fullWidth
-                                       value={data.filter(item => item.meta.id === dataItemClicked).map(item => item.meta.alias)}/>
-                            <IconButton aria-label="edit-alias" color="secondary">
-                                <EditIcon/>
-                            </IconButton>
-                            <IconButton aria-label="filter-alias" color="primary">
-                                <FilterAltIcon/>
-                            </IconButton>
-                        </Stack>
-                        <Stack direction="row" spacing={1}>
-                            <TextField disabled
-                                       id="field-prefix"
-                                       size="small"
-                                       label="prefix"
-                                       margin="normal"
-                                       fullWidth
-                                       value={data.filter(item => item.meta.id === dataItemClicked).map(item => item.meta.prefix)}/>
-                            <IconButton aria-label="edit-prefix" color="secondary">
-                                <EditIcon/>
-                            </IconButton>
-                            <IconButton aria-label="filter-prefix" color="primary" onClick={() =>
-                                handleClickFilter(dataItemClicked)}>
-                                <FilterAltIcon/>
-                            </IconButton>
-                        </Stack>
-                        <Stack direction="row" spacing={0}>
-                            <TextField disabled
-                                       id="field-column"
-                                       size="small"
-                                       label="column"
-                                       margin="normal"
-                                       fullWidth
-                                       value={data.filter(item => item.meta.id === dataItemClicked).map(item => item.meta.column)}/>
-                            <IconButton aria-label="edit-column" color="secondary">
-                                <EditIcon/>
-                            </IconButton>
-                            <IconButton aria-label="filter-column" color="primary">
-                                <FilterAltIcon/>
-                            </IconButton>
-                        </Stack>
-                    </Box>
-
-                </DataContentMeta>
-            </DataContent>
-
+                                <TextField disabled
+                                           id="field-alias"
+                                           size="small"
+                                           label="alias"
+                                           margin="normal"
+                                           fullWidth
+                                           value={data.filter(item => item.meta.id === dataItemClicked).map(item => item.meta.alias)}/>
+                                <IconButton aria-label="edit-alias" color="secondary">
+                                    <EditIcon/>
+                                </IconButton>
+                                <IconButton aria-label="filter-alias" color="primary">
+                                    <FilterAltIcon/>
+                                </IconButton>
+                            </Stack>
+                            <Stack direction="row" spacing={1}>
+                                <TextField disabled
+                                           id="field-prefix"
+                                           size="small"
+                                           label="prefix"
+                                           margin="normal"
+                                           fullWidth
+                                           value={data.filter(item => item.meta.id === dataItemClicked).map(item => item.meta.prefix)}/>
+                                <IconButton aria-label="edit-prefix" color="secondary">
+                                    <EditIcon/>
+                                </IconButton>
+                                <IconButton aria-label="filter-prefix" color="primary" onClick={() =>
+                                    handleClickFilter(dataItemClicked)}>
+                                    <FilterAltIcon/>
+                                </IconButton>
+                            </Stack>
+                            <Stack direction="row" spacing={0}>
+                                <TextField disabled
+                                           id="field-column"
+                                           size="small"
+                                           label="column"
+                                           margin="normal"
+                                           fullWidth
+                                           value={data.filter(item => item.meta.id === dataItemClicked).map(item => item.meta.column)}/>
+                                <IconButton aria-label="edit-column" color="secondary">
+                                    <EditIcon/>
+                                </IconButton>
+                                <IconButton aria-label="filter-column" color="primary">
+                                    <FilterAltIcon/>
+                                </IconButton>
+                            </Stack>
+                        </Box>
+                    </Stack>
+                </Stack>
+            </Container>
         </DataWrapper>
 
     )

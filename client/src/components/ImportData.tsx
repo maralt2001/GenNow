@@ -3,10 +3,11 @@ import React, {useEffect, useState} from "react";
 import {loadFile, separator, createArrayConfItems} from "../data/LoadFile";
 import {useGlobalState} from "./ContentContainer";
 
-import Button from '@mui/material/Button';
+
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
-import Stack from '@mui/material/Stack';
+import {Container, Stack, Button, CssBaseline} from '@mui/material';
+
 
 interface ConfItemsMeta {
     id: string
@@ -102,53 +103,63 @@ const ImportData = () => {
 
     return (
         <div className="ImportData-Wrapper">
-            <div className='Import-Header'>
-                <span className="Import-Header-Text">Pick File .cfg</span>
-            </div>
-            <div className="Import-Body">
-                <i className="bx bxs-file-import Open-Icon" onClick={() => fileInput.current?.click()}/>
-                {fileName !== 'none' && fileContent.length !== 0 && <span className="File-Item">{fileName}</span>}
-            </div>
-                {fileContent.length !== 0 && <div className="Import-Preview">
-                    <div className="Import-Preview-Header">
-                        <span>Data Preview</span>
-                        <span>Current: {fileContent.length}</span>
-                        <span>Selected: {countSelected}</span>
-                        <Stack className="Header-Button-Stack" direction="row" spacing={4}>
-                            <Button variant="contained"
-                                    size="small"
-                                    color="error"
-                                    startIcon={<DeleteIcon/>}
-                                    onClick={() => handleClickTrash()}>
-                                Delete selected
-                            </Button>
-                            <Button variant="contained"
-                                    size="small"
-                                    endIcon={<SendIcon/>}
-                                    color="secondary"
-                                    onClick={() => handleTransferData()}>
-                                Send to Data
-                            </Button>
-                        </Stack>
+            <CssBaseline/>
+            <Container maxWidth="lg">
+                <div className="Import">
+                    <div className='Import-Header'>
+                        <span className="Import-Header-Text">Pick File [.cfg]</span>
                     </div>
-                    <div className="Import-Preview-Body">
-                        <React.Fragment>
-                            {fileContent.map(item => <div
-                                              key={item.meta.id}
-                                              className="Prev-DataItem-Container"
-                                              ref={React.createRef}
-                                              onClick={(e) =>
-                                                        handleClickItem(e.currentTarget, fileContent.indexOf(item))}>
-                                <div className="Prev-DataItem-Key-Container">
-                                    <span className="Prev-Data-Item-Key">{item.key}</span>
-                                </div>
-                                <div className="Prev-DataItem-Value-Container">
-                                    <span className="Prev-Data-Item-Value">{item.value}</span>
-                                </div>
-                            </div>)}
-                        </React.Fragment>
-                    </div>
+                </div>
+            </Container>
+            <Container maxWidth="lg">
+                <div className="Import-Body">
+                    <i className="bx bxs-file-import Open-Icon" onClick={() => fileInput.current?.click()}/>
+                    {fileName !== 'none' && fileContent.length !== 0 && <span className="File-Item">{fileName}</span>}
+                </div>
+            </Container>
+            <Container maxWidth="lg">
+            {fileContent.length !== 0 && <div className="Import-Preview">
+            <Container maxWidth="lg">
+                <Stack direction="column" overflow={"hidden"}
+                       spacing={1} mt={2} paddingX={2} paddingBottom={2} borderBottom={1} borderColor={"grey.100"}>
+                    <Stack direction="row" spacing={3}>
+                        <span style={{fontWeight: "bold"}}>Current: {fileContent.length}</span>
+                        <span style={{fontWeight: "bold"}}>Selected: {countSelected}</span>
+                    </Stack>
 
+                    <Button variant="contained"
+                            size="small"
+                            color="error"
+                            startIcon={<DeleteIcon/>}
+                            onClick={() => handleClickTrash()}>
+                        Delete selected
+                    </Button>
+                    <Button variant="contained"
+                            size="small"
+                            startIcon={<SendIcon/>}
+                            color="secondary"
+                            onClick={() => handleTransferData()}>
+                        Send to Data
+                    </Button>
+                </Stack>
+            </Container>
+                <div className="Import-Preview-Body">
+                    <React.Fragment>
+                        {fileContent.map(item => <div
+                                          key={item.meta.id}
+                                          className="Prev-DataItem-Container"
+                                          ref={React.createRef}
+                                          onClick={(e) =>
+                                                    handleClickItem(e.currentTarget, fileContent.indexOf(item))}>
+                            <div className="Prev-DataItem-Key-Container">
+                                <span className="Prev-Data-Item-Key">{item.key}</span>
+                            </div>
+                            <div className="Prev-DataItem-Value-Container">
+                                <span className="Prev-Data-Item-Value">{item.value}</span>
+                            </div>
+                        </div>)}
+                    </React.Fragment>
+                </div>
             </div>}
             <input ref={fileInput}
                    type="file"
@@ -156,6 +167,7 @@ const ImportData = () => {
                    style={{display: "none"}}
                    accept=".cfg"
                    onChange={(e) => handleFileSelect(e.target)}/>
+            </Container>
         </div>
 
     );

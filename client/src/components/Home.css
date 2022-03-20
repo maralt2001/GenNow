@@ -2,20 +2,18 @@
 .Home {
     position: relative;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    height: 60%;
-    width: 100%;
-    margin-top: 6em;
-    gap: 4em;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 70%;
+    padding-inline: 10%;
+    margin-top: 5%;
 }
 
 .Home-Card-One, .Home-Card-Two, .Home-Card-Three {
     display: flex;
     flex-direction: column;
-
+    align-self: stretch;
 }
 
 .Home-Card-One-Header, .Home-Card-Two-Header, .Home-Card-Three-Header {
@@ -23,24 +21,14 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    gap: 1em;
-    width: 25em;
-    padding-left: 1em;
-    padding-right: 1em;
+    gap: 2em;
+    padding-left: 2%;
+    padding-right: 2%;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     background-color: rgba(28, 36, 97, 0.8);
     box-shadow: 0 0 1em gray;
     border-bottom: 1px solid gainsboro;
-}
-
-@media screen and (max-width: 1600px) {
-    .Home {
-        gap: 2em;
-        justify-content: flex-start;
-        padding-left: 20%;
-
-    }
 }
 
 .Home-Card-One-Header i {
@@ -63,23 +51,13 @@
     opacity: 0.5;
 }
 
-.Home-Card-One-Header .Expand {
+.Home .Expand {
     font-size: 1.5em;
     color: gainsboro;
     margin-left: auto;
 }
 
-.Home-Card-Two-Header .Expand {
-    font-size: 1.5em;
-    color: gainsboro;
-    margin-left: auto;
-}
 
-.Home-Card-Three-Header .Expand {
-    font-size: 1.5em;
-    color: gainsboro;
-    margin-left: auto;
-}
 
 .Home-Card-One-Header span, .Home-Card-Two-Header span, .Home-Card-Three-Header span {
     font-size: 1.5em;
@@ -88,10 +66,9 @@
 
 .Home-Card-One-Body, .Home-Card-Two-Body, .Home-Card-Three-Body {
     display: none;
-    width: 25em;
-    max-height: 20em;
+
     background-color: rgba(12, 46, 99, 0.2);
-    overflow: hidden;
+
 }
 
 .Active {
