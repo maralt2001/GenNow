@@ -5,6 +5,7 @@ import styled from "styled-components";
 import {checkArrayDiffOrig,setPrefixConfItems} from "../data/LoadFile";
 import {v4 } from 'uuid'
 import {DataItem} from "./DataItem";
+import {ColumnSetter} from "./ColumnSetter";
 
 /*MaterialUI*/
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -15,6 +16,14 @@ import {Container, Stack, Box, TextField, CssBaseline, Accordion, AccordionSumma
 
 interface ActiveSpan {
     active: boolean
+
+}
+
+export interface EditColumnName{
+    itemID: string
+    originColumn: string
+    handleChange: Function
+    handleConfirm: Function
 
 }
 const DataWrapper = styled.div`
@@ -96,6 +105,7 @@ const Data = () => {
     const [expanded, setExpanded] = useState(false)
     const [activeFilter, setActiveFilter] = useState(false)
     const [dataFiltered, setDataFiltered] = useState(new Array<ConfItems>())
+    const [editColumn, setEditColumn] = useState({active: false, columnName: '' as string})
 
 
 
@@ -124,21 +134,76 @@ const Data = () => {
 
     }
 
-    function handleClickFilter(itemID: string) {
+    function handleClickFilter(itemID: string, filterName: string) {
 
             let result = data.find(ele => ele.meta.id === itemID)
-            if(result?.meta.prefix !== undefined  && !activeFilter) {
+            switch (filterName) {
+                case "prefix": {
+                    if(result?.meta.prefix !== undefined && !activeFilter) {
 
-                let filter = data.filter(item => item.meta.prefix === result?.meta.prefix)
-                setDataFiltered(filter)
-                setActiveFilter(true)
+                        let filter = data.filter(item => item.meta.prefix === result?.meta.prefix)
+                        setDataFiltered(filter)
+                        setActiveFilter(true)
+                        break
+
+                    }
+                    else {
+                        setActiveFilter(false)
+                        break
+                    }
+                }
+                case "column": {
+                    if(result?.meta.column !== undefined && !activeFilter) {
+
+                        let filter = data.filter(item => item.meta.column === result?.meta.column)
+                        setDataFiltered(filter)
+                        setActiveFilter(true)
+                        break
+
+                    }
+                    else {
+
+                        setActiveFilter(false)
+                        break
+                    }
+                }
 
             }
-            else {
 
-                setActiveFilter(false)
-            }
+
+
     }
+
+   function handleEditColumn() {
+
+        setEditColumn({active: !editColumn.active, columnName:''});
+   }
+
+   function handleChangeEditColumn(value: string) {
+        if(editColumn.active) {
+            setEditColumn({active: true, columnName: value})
+        }
+
+   }
+
+   function handleConfirmEditColumn() {
+        if(editColumn.active) {
+            setEditColumn({active: false, columnName: editColumn.columnName})
+            data.filter(item => item.meta.id === dataItemClicked).map(ele => ele.meta.column = editColumn.columnName)
+        }
+   }
+
+   function getItemColumn(id: string):string {
+
+        let item = data.filter(item => item.meta.id === id);
+        if(item[0].meta.column) {
+            return item[0].meta.column;
+        }
+        return ""
+
+   }
+
+
 
     //Component unmount
     useEffect(() => {
@@ -244,7 +309,7 @@ const Data = () => {
                                     <EditIcon/>
                                 </IconButton>
                                 <IconButton aria-label="filter-prefix" color="primary" onClick={() =>
-                                    handleClickFilter(dataItemClicked)}>
+                                    handleClickFilter(dataItemClicked,"prefix")}>
                                     <FilterAltIcon/>
                                 </IconButton>
                             </Stack>
@@ -255,16 +320,23 @@ const Data = () => {
                                            label="column"
                                            margin="normal"
                                            fullWidth
-                                           value={data.filter(item => item.meta.id === dataItemClicked).map(item => item.meta.column)}/>
-                                <IconButton aria-label="edit-column" color="secondary">
+                                           value={editColumn.active? editColumn.columnName: data.filter(item => item.meta.id === dataItemClicked).map(item => item.meta.column)}/>
+                                <IconButton aria-label="edit-column" color="secondary" onClick={() => handleEditColumn()}>
                                     <EditIcon/>
                                 </IconButton>
-                                <IconButton aria-label="filter-column" color="primary">
+                                <IconButton aria-label="filter-column" color="primary" onClick={() => handleClickFilter(dataItemClicked, "column")}>
                                     <FilterAltIcon/>
                                 </IconButton>
                             </Stack>
+                        {editColumn.active && <ColumnSetter
+                            itemID={dataItemClicked}
+                            originColumn={getItemColumn(dataItemClicked)}
+                            handleChange={(value:string) => handleChangeEditColumn(value)}
+                            handleConfirm={() => handleConfirmEditColumn()}/>}
                         </Box>
+
                     </Stack>
+
                 </Stack>
             </Container>
         </DataWrapper>
