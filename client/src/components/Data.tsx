@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {ConfItems} from "./ImportData";
 import {useGlobalState} from "./ContentContainer";
 import styled from "styled-components";
-import {checkArrayDiffOrig,setPrefixConfItems} from "../data/LoadFile";
+import {checkArrayDiffOrig,setPrefixConfItems, getKeyWithoutPrefix, isKeyEndsWith} from "../data/LoadFile";
 import {v4 } from 'uuid'
 import {DataItem} from "./DataItem";
 import {ColumnSetter} from "./ColumnSetter";
@@ -186,11 +186,34 @@ const Data = () => {
 
    }
 
-   function handleConfirmEditColumn() {
-        if(editColumn.active) {
+   function handleConfirmEditColumn(similar:boolean) {
+
+        if(editColumn.active && !similar) {
             setEditColumn({active: false, columnName: editColumn.columnName})
             data.filter(item => item.meta.id === dataItemClicked).map(ele => ele.meta.column = editColumn.columnName)
         }
+        if(editColumn.active && similar) {
+
+            setEditColumn({active: false, columnName: editColumn.columnName})
+            let key:string;
+            if(hasItemPrefix(dataItemClicked)) {
+                let item = data.filter(item => item.meta.id === dataItemClicked)[0]
+                key = (getKeyWithoutPrefix(item))
+            }
+            else {
+                key = data.filter(item => item.meta.id === dataItemClicked)[0].key
+
+            }
+            data.filter(item => isKeyEndsWith(item,key)).map(ele => ele.meta.column = editColumn.columnName)
+
+        }
+
+   }
+
+   function hasItemPrefix(id: string): boolean {
+       let item = data.filter(item => item.meta.id === id)[0];
+       return item.meta.prefix !== undefined && item.meta.prefix !== "";
+
    }
 
    function getItemColumn(id: string):string {
@@ -332,7 +355,7 @@ const Data = () => {
                             itemID={dataItemClicked}
                             originColumn={getItemColumn(dataItemClicked)}
                             handleChange={(value:string) => handleChangeEditColumn(value)}
-                            handleConfirm={() => handleConfirmEditColumn()}/>}
+                            handleConfirm={(similar:boolean) => handleConfirmEditColumn(similar)}/>}
                         </Box>
 
                     </Stack>

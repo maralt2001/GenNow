@@ -74,5 +74,17 @@ function setPrefixConfItems(items: ConfItems[]): ConfItems[] {
     return items
 }
 
+function getKeyWithoutPrefix(item: ConfItems):string {
 
-export {loadFile,separator,separation, createArrayConfItems, checkArrayDiffOrig, setPrefixConfItems}
+    let prefix = item.meta.prefix;
+    return voca.substr(item.key, voca.count(prefix))
+
+}
+
+function isKeyEndsWith(item: ConfItems, endsWith:string): boolean {
+    return voca.endsWith(item.key, endsWith)
+}
+
+
+export {loadFile,separator,separation, createArrayConfItems,
+    checkArrayDiffOrig, setPrefixConfItems, getKeyWithoutPrefix, isKeyEndsWith}

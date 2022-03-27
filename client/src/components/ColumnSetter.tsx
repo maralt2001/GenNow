@@ -27,7 +27,7 @@ const ColumnSetter = (props:EditColumnName) => {
                            placeholder={props.originColumn}
                            onChange={(name) => props.handleChange(name.currentTarget.value)}
                            variant="standard" />
-                <IconButton aria-label="filter-column" color="primary" onClick={() => props.handleConfirm() }>
+                <IconButton aria-label="filter-column" color="primary" onClick={() => props.handleConfirm(checked) }>
                     <CheckIcon/>
                 </IconButton>
             </Stack>
