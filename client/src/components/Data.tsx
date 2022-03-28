@@ -14,6 +14,7 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import {Container, Stack, Box, TextField, CssBaseline, Accordion, AccordionSummary, AccordionDetails, IconButton}
     from '@mui/material';
 
+
 interface ActiveSpan {
     active: boolean
 
@@ -43,6 +44,7 @@ const DataHeader = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  max-height: 2.5em;
   padding-inline: 15px;
   padding-block: 4px;
   background-color: rgba(28, 36, 97, 0.8);
@@ -103,7 +105,7 @@ const Data = () => {
     const [activeItems, setActiveItems] = useState(new Array<string>())
     const [dataItemClicked, setDataItemClicked] = useState('')
     const [expanded, setExpanded] = useState(false)
-    const [activeFilter, setActiveFilter] = useState(false)
+    const [activeFilter, setActiveFilter] = useState({active: false, typ: '' as string})
     const [dataFiltered, setDataFiltered] = useState(new Array<ConfItems>())
     const [editColumn, setEditColumn] = useState({active: false, columnName: '' as string})
 
@@ -139,31 +141,31 @@ const Data = () => {
             let result = data.find(ele => ele.meta.id === itemID)
             switch (filterName) {
                 case "prefix": {
-                    if(result?.meta.prefix !== undefined && !activeFilter) {
+                    if(result?.meta.prefix !== undefined && !activeFilter.active) {
 
                         let filter = data.filter(item => item.meta.prefix === result?.meta.prefix)
                         setDataFiltered(filter)
-                        setActiveFilter(true)
+                        setActiveFilter({active: true, typ: filterName})
                         break
 
                     }
                     else {
-                        setActiveFilter(false)
+                        setActiveFilter({active: false, typ: ''})
                         break
                     }
                 }
                 case "column": {
-                    if(result?.meta.column !== undefined && !activeFilter) {
+                    if(result?.meta.column !== undefined && !activeFilter.active) {
 
                         let filter = data.filter(item => item.meta.column === result?.meta.column)
                         setDataFiltered(filter)
-                        setActiveFilter(true)
+                        setActiveFilter({active: true, typ: filterName})
                         break
 
                     }
                     else {
 
-                        setActiveFilter(false)
+                        setActiveFilter({active: false, typ: ''})
                         break
                     }
                 }
@@ -273,13 +275,13 @@ const Data = () => {
                                 <p style={{margin:0, color: "rgba(28, 36, 97,1)"}}>Data({activeItems.indexOf(item) +1})</p>
                                 </AccordionSummary>
                                 <AccordionDetails>
-                                    {!activeFilter &&
+                                    {!activeFilter.active &&
                                     <DataItemContainerBody>
                                         {data.filter(ele => ele.meta.origin === item).map(e =>
                                            <DataItem item={e} onClickItem={(id) => handleClickDataItem(id)} key={e.meta.id}/>
                                         )}
                                     </DataItemContainerBody>}
-                                    {activeFilter &&
+                                    {activeFilter.active &&
                                     <DataItemContainerBody>
                                         {dataFiltered.map(e =>
                                             <DataItem item={e} onClickItem={(id) => handleClickDataItem(id)} key={e.meta.id}/>
@@ -331,7 +333,9 @@ const Data = () => {
                                 <IconButton aria-label="edit-prefix" color="secondary">
                                     <EditIcon/>
                                 </IconButton>
-                                <IconButton aria-label="filter-prefix" color="primary" onClick={() =>
+                                <IconButton aria-label="filter-prefix"
+                                            color={activeFilter.active && activeFilter.typ === "prefix"? "success": "primary"}
+                                            onClick={() =>
                                     handleClickFilter(dataItemClicked,"prefix")}>
                                     <FilterAltIcon/>
                                 </IconButton>
@@ -347,7 +351,7 @@ const Data = () => {
                                 <IconButton aria-label="edit-column" color="secondary" onClick={() => handleEditColumn()}>
                                     <EditIcon/>
                                 </IconButton>
-                                <IconButton aria-label="filter-column" color="primary" onClick={() => handleClickFilter(dataItemClicked, "column")}>
+                                <IconButton aria-label="filter-column" color={activeFilter.active && activeFilter.typ === "column"? "success": "primary"} onClick={() => handleClickFilter(dataItemClicked, "column")}>
                                     <FilterAltIcon/>
                                 </IconButton>
                             </Stack>

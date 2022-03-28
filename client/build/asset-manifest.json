@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/gennow/static/css/main.bd87c99f.css",
-    "main.js": "/gennow/static/js/main.89071d35.js",
+    "main.js": "/gennow/static/js/main.45103088.js",
     "static/js/787.c4e7f8f9.chunk.js": "/gennow/static/js/787.c4e7f8f9.chunk.js",
     "index.html": "/gennow/index.html",
     "main.bd87c99f.css.map": "/gennow/static/css/main.bd87c99f.css.map",
-    "main.89071d35.js.map": "/gennow/static/js/main.89071d35.js.map",
+    "main.45103088.js.map": "/gennow/static/js/main.45103088.js.map",
     "787.c4e7f8f9.chunk.js.map": "/gennow/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.bd87c99f.css",
-    "static/js/main.89071d35.js"
+    "static/js/main.45103088.js"
   ]
 }
