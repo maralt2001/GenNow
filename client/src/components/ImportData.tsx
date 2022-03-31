@@ -6,7 +6,9 @@ import {useGlobalState} from "./ContentContainer";
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
-import {Container, Stack, Button, CssBaseline} from '@mui/material';
+import {Container, Stack, Button, CssBaseline, Chip, Typography, ButtonGroup} from '@mui/material';
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+
 
 
 interface ConfItemsMeta {
@@ -46,9 +48,13 @@ const ImportData = () => {
 
     function handleClickItem(e:HTMLDivElement, index:number) {
 
+        let keyContainer = e.children.item(0) as HTMLDivElement
+        let valueContainer = e.children.item(1) as HTMLDivElement
         //setFileContent((items) =>items.filter((element,pos) => pos !== index) );
         if(e.className === 'Prev-DataItem-Container') {
             e.className = 'Prev-DataItem-Container Selected'
+            keyContainer.className = 'Prev-DataItem-Key-Container Selected'
+            valueContainer.className = 'Prev-DataItem-Value-Container Selected'
             let newState = [...fileContent];
             newState[index].selected = true;
             setFileContent(newState);
@@ -58,6 +64,8 @@ const ImportData = () => {
 
         else {
             e.className = 'Prev-DataItem-Container'
+            keyContainer.className = 'Prev-DataItem-Key-Container'
+            valueContainer.className = 'Prev-DataItem-Value-Container'
             let newState = [...fileContent];
             newState[index].selected = false;
             setFileContent(newState)
@@ -95,6 +103,8 @@ const ImportData = () => {
     const [,setSetter] = useGlobalState('setter')
     const [,setData] = useGlobalState('data')
 
+    const KeyContainer = React.createRef<HTMLDivElement>()
+
 
     useEffect(() => {
 
@@ -104,43 +114,51 @@ const ImportData = () => {
     return (
         <div className="ImportData-Wrapper">
             <CssBaseline/>
-            <Container maxWidth="lg">
+            <Container maxWidth="xl">
                 <div className="Import">
                     <div className='Import-Header'>
                         <span className="Import-Header-Text">Pick File [.cfg]</span>
                     </div>
                 </div>
             </Container>
-            <Container maxWidth="lg">
+            <Container maxWidth="xl">
                 <div className="Import-Body">
                     <i className="bx bxs-file-import Open-Icon" onClick={() => fileInput.current?.click()}/>
-                    {fileName !== 'none' && fileContent.length !== 0 && <span className="File-Item">{fileName}</span>}
+                    {fileName !== 'none' && fileContent.length !== 0 && <Chip label={fileName} size="medium" style={{color: "gainsboro"}} variant="outlined" color="primary" icon={<AttachFileIcon/>}/>}
                 </div>
             </Container>
-            <Container maxWidth="lg">
+            <Container maxWidth="xl">
             {fileContent.length !== 0 && <div className="Import-Preview">
-            <Container maxWidth="lg">
+            <Container maxWidth="xl">
                 <Stack direction="column" overflow={"hidden"}
                        spacing={1} mt={2} paddingX={2} paddingBottom={2} borderBottom={1} borderColor={"grey.100"}>
                     <Stack direction="row" spacing={3}>
-                        <span style={{fontWeight: "bold"}}>Current: {fileContent.length}</span>
-                        <span style={{fontWeight: "bold"}}>Selected: {countSelected}</span>
-                    </Stack>
+                        <Typography style={{fontWeight: "bold"}} variant="subtitle2" display="block"  color={"gainsboro"}>
+                            Current: {fileContent.length}
+                        </Typography>
+                        <Typography style={{fontWeight: "bold"}} variant="subtitle2" display="block"  color={"gainsboro"}>
+                            Current: {countSelected}
+                        </Typography>
 
-                    <Button variant="contained"
-                            size="small"
-                            color="error"
-                            startIcon={<DeleteIcon/>}
-                            onClick={() => handleClickTrash()}>
-                        Delete selected
-                    </Button>
-                    <Button variant="contained"
-                            size="small"
-                            startIcon={<SendIcon/>}
-                            color="secondary"
-                            onClick={() => handleTransferData()}>
-                        Send to Data
-                    </Button>
+
+                    </Stack>
+                    <ButtonGroup fullWidth>
+                        <Button variant="contained"
+                                size="small"
+                                color="error"
+                                startIcon={<DeleteIcon/>}
+                                onClick={() => handleClickTrash()}>
+                            Delete selected
+                        </Button>
+                        <Button variant="contained"
+                                size="small"
+                                startIcon={<SendIcon/>}
+                                color="primary"
+                                onClick={() => handleTransferData()}>
+                            Send to Data
+                        </Button>
+                    </ButtonGroup>
+
                 </Stack>
             </Container>
                 <div className="Import-Preview-Body">
@@ -151,7 +169,7 @@ const ImportData = () => {
                                           ref={React.createRef}
                                           onClick={(e) =>
                                                     handleClickItem(e.currentTarget, fileContent.indexOf(item))}>
-                            <div className="Prev-DataItem-Key-Container">
+                            <div className="Prev-DataItem-Key-Container" ref={KeyContainer}>
                                 <span className="Prev-Data-Item-Key">{item.key}</span>
                             </div>
                             <div className="Prev-DataItem-Value-Container">

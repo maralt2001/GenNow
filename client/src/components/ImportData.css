@@ -7,7 +7,7 @@
     align-items: flex-start;
     height: 70%;
     padding-inline: 20%;
-    margin-top: 5%;
+    margin-top: 2%;
 }
 
 .Import {
@@ -21,7 +21,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    background-color: rgba(28, 36, 97, 0.8);
+    background-color: rgba(20, 25, 64, .8);
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
     border-bottom: 1px solid gainsboro;
@@ -38,7 +38,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    background-color: rgba(17, 54, 140, 0.5);
+    background: linear-gradient(45deg, rgba(20, 25, 64, .75), rgba(20, 25, 64, .85));
     padding-inline: 15px;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -46,7 +46,7 @@
     border-bottom-right-radius: 2px;
     border-bottom-left-radius: 2px;
     border-bottom: 2px solid gainsboro;
-    gap: 10px;
+    gap: 30px;
 
 
 }
@@ -85,7 +85,7 @@
     display: flex;
     flex-direction: column;
     align-self: stretch;
-    background-color: rgba(17, 54, 140, 0.3);
+    background: linear-gradient(45deg, rgba(20, 25, 64, .6), rgba(20, 25, 64, .75));
     border-radius: 3px;
 }
 
@@ -98,7 +98,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 35em;
+    height: 60vh;
     margin-top: 1em;
     margin-bottom: 0.5em;
     padding-left: 1em;
@@ -119,9 +119,7 @@
     cursor: pointer;
 }
 
-.Prev-DataItem-Container.Selected {
-    opacity: .4;
-}
+
 
 
 
@@ -133,13 +131,25 @@
     align-items: center;
     padding-left: 1%;
     padding-block: .25%;
-    background-color: rgba(22, 25, 46, 0.6);
+    background-color: rgba(22, 25, 46, 0.75);
     border-radius: 10px;
-    border-right: 2px solid gainsboro;
+
 
 
 
 }
+
+.Prev-DataItem-Key-Container.Selected {
+    color: limegreen;
+    opacity: 1;
+}
+
+.Prev-DataItem-Value-Container.Selected {
+    color: limegreen;
+    opacity: 1;
+}
+
+
 
 .Prev-DataItem-Value-Container {
     display: flex;
@@ -151,7 +161,7 @@
     padding-block: .25%;
     text-overflow: ellipsis;
     overflow-x: hidden;
-    background-color: rgba(22, 25, 46, 0.8);
+    background-color: rgba(22, 25, 46, 0.4);
     border-radius: 10px;
 
 

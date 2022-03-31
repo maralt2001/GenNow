@@ -11,14 +11,12 @@ import {ColumnSetter} from "./ColumnSetter";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/Edit';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import {Container, Stack, Box, TextField, CssBaseline, Accordion, AccordionSummary, AccordionDetails, IconButton}
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import {Container, Stack, Box, TextField, CssBaseline, Accordion, AccordionDetails, AccordionSummary, IconButton, Chip, Typography}
     from '@mui/material';
 
 
-interface ActiveSpan {
-    active: boolean
 
-}
 
 export interface EditColumnName{
     itemID: string
@@ -35,7 +33,7 @@ const DataWrapper = styled.div`
   align-items: flex-start;
   height: 100%;
   padding-inline: 10%;
-  margin-top: 5%;
+  margin-top: 2%;
 `
 const DataHeader = styled.div`
   
@@ -44,10 +42,9 @@ const DataHeader = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  max-height: 2.5em;
   padding-inline: 15px;
   padding-block: 4px;
-  background-color: rgba(28, 36, 97, 0.8);
+  background-color: rgba(20, 25, 64, .95);
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
   
@@ -59,32 +56,11 @@ const DataBody = styled.div`
   width: 70%;
 `
 
-
-const DataHeaderOriginText = styled.span`
-  color: gainsboro;
-  font-size: 1em;
-`
-const DataHeaderOriginItem = styled.span<ActiveSpan>`
-  color: ${props => props.active? "#73e038": "gainsboro"};
-  background: transparent;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 8em;
-  border: ${props =>
-    props.active? "2px solid #73e038":
-        "1px solid gainsboro"};
-  border-radius: 3px;
-  padding: 0.25em 0.75em;
-  margin: ${props => props.active? "-1px": ""};
-  &:hover {
-    cursor: pointer;
-  }
-`
 const DataItemContainerBody = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 40em;
+  height: 70vh;
   margin-bottom: 0.5em;
   padding-left: 0.5em;
   padding-right: 0.5em;
@@ -92,6 +68,7 @@ const DataItemContainerBody = styled.div`
   overflow-y: auto;
   gap: 0.3em;
   padding-top: 5px;
+  
 `
 
 
@@ -111,7 +88,7 @@ const Data = () => {
 
 
 
-    function handleClickOriginItem(item:HTMLSpanElement) {
+    function handleClickOriginItem(item:HTMLDivElement) {
 
        //item is in activeItems => remove it
        if(activeItems.includes(item.innerText)) {
@@ -133,6 +110,14 @@ const Data = () => {
 
     function handleClickDataItem(itemID:string) {
         setDataItemClicked(itemID)
+        data.forEach(item => {
+            item.selected = false
+            if (item.meta.id === itemID) {
+                item.selected = !item.selected;
+            }
+
+        })
+        setData(data)
 
     }
 
@@ -245,25 +230,22 @@ const Data = () => {
         <DataWrapper className="Data-Wrapper">
             <CssBaseline/>
             {/* Header */}
-            <Container maxWidth="xl">
+            <Container maxWidth="xl" disableGutters>
                 {data.length !== 0 && <DataHeader>
                     <Stack direction="row" spacing={3} alignItems={"center"}>
-                        <DataHeaderOriginText>Available Data(Origin):</DataHeaderOriginText>
+                        <Typography variant="body2" display="block"  color={"gainsboro"}>
+                            Available data:
+                        </Typography>
                         {diffOrigin.length > 0?
-                            diffOrigin.map(item =>
-                                <DataHeaderOriginItem
-                                    active={activeItems.includes(item)}
-                                    onClick={(e) => handleClickOriginItem(e.currentTarget)}
-                                    key={v4()}
-                                >
-                                    {item}
-                                </DataHeaderOriginItem>)
+                            diffOrigin.map(item => <Chip label={item} size="small" style={{color: "gainsboro"}} variant="outlined" color="primary" icon={<AttachFileIcon/>}
+                                onClick={(item) => handleClickOriginItem(item.currentTarget)}/>
+                                )
                             :"empty"}
                     </Stack>
                 </DataHeader>}
             </Container>
             {/* Data Items & Meta */}
-            <Container maxWidth="xl">
+            <Container maxWidth="xl" disableGutters>
                 <Stack direction="row" spacing={1} borderTop={2} borderColor={"grey.100"} >
                     <DataBody>
                     {activeItems.length > 0 && activeItems.map(item =>
@@ -278,13 +260,18 @@ const Data = () => {
                                     {!activeFilter.active &&
                                     <DataItemContainerBody>
                                         {data.filter(ele => ele.meta.origin === item).map(e =>
-                                           <DataItem item={e} onClickItem={(id) => handleClickDataItem(id)} key={e.meta.id}/>
+                                            <div onClick={() => handleClickDataItem(e.meta.id)} key={e.meta.id}>
+                                                <DataItem item={e} clicked={!!e.selected}/>
+                                            </div>
+
                                         )}
                                     </DataItemContainerBody>}
                                     {activeFilter.active &&
                                     <DataItemContainerBody>
                                         {dataFiltered.map(e =>
-                                            <DataItem item={e} onClickItem={(id) => handleClickDataItem(id)} key={e.meta.id}/>
+                                            <div onClick={() => handleClickDataItem(e.meta.id)} key={e.meta.id}>
+                                                <DataItem item={e} clicked={!!e.selected}/>
+                                            </div>
                                         )}
                                     </DataItemContainerBody>}
                                 </AccordionDetails>

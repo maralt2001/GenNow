@@ -1,12 +1,12 @@
 
 :root {
-    --background: linear-gradient(90deg,rgba(141, 148, 196, .90),rgba(141, 148, 196, .40));
+    --background: linear-gradient(90deg,rgba(20, 25, 64, .95),rgba(20, 25, 64, .80));
     --border-active-link: #5776d4;
-    --bg-color-hover-active: rgb(174, 184, 214);
-    --color-header-brand: rgba(28, 36, 97, 0.8);
-    --color-header-icon: rgba(28, 36, 97, 0.90);
-    --color-header-icon-hover: rgba(72, 88, 212, 0.95);
-    --color-link-item: rgba(36, 53, 105, 0.8);
+    --bg-color-hover-active: rgba(49, 55, 99, .30);
+    --color-header-brand: gainsboro;
+    --color-header-icon: gainsboro;
+    --color-header-icon-hover: rgba(49, 55, 99, .60);
+    --color-link-item: gainsboro;
     --sidebar-width-collapsed: 50px;
 }
 

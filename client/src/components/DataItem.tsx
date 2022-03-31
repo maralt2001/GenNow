@@ -1,11 +1,12 @@
 
-import React from "react";
+import React, {useState} from "react";
 import {ConfItems} from "./ImportData";
 import styled from "styled-components";
 
-interface dataItemProps {
+export interface dataItemProps {
     item: ConfItems
-    onClickItem(id:string):void
+    clicked: boolean
+
 }
 const DataItemContainer = styled.div`
   display: flex;
@@ -17,8 +18,12 @@ const DataItemContainer = styled.div`
   justify-content: flex-start;
   &:hover {
     cursor: pointer;
-    opacity: 0.6;
+   
+    
   }
+  
+ 
+ 
 `
 const DataItemContainerKey = styled.div`
   display: flex;
@@ -29,11 +34,15 @@ const DataItemContainerKey = styled.div`
   max-height: 2em;
   max-width: 45%;
   min-width: 45%;
-  background-color: rgba(22, 25, 46, 0.8);
+  background-color: rgba(22, 25, 46, 0.85);
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   border-right: 2px solid gainsboro;
   overflow-x: hidden;
+  &.click {
+    opacity: 0.8;
+    color: #73e038;
+  }
   
 `
 const DataItemContainerValue = styled.div`
@@ -45,25 +54,34 @@ const DataItemContainerValue = styled.div`
   max-height: 2em;
   max-width: 55%;
   min-width: 55%;
-  background-color: rgba(28, 36, 97, 0.9);
+  z-index: 100;
+  background-color:  rgba(19, 29, 92, 1);
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   overflow: hidden;
+  &.click {
+    opacity: 0.8;
+    color: #73e038;
+  }
 `
 const DataItem = (props:dataItemProps) => {
 
-    const {item, onClickItem} = props
-    const localClickItem = (id:string) => onClickItem(id)
+
+    const {item, clicked} = props
+
 
     return(
-        <DataItemContainer onClick={() =>localClickItem(item.meta.id)}>
-            <DataItemContainerKey>
-                {item.key}
-            </DataItemContainerKey>
-            <DataItemContainerValue>
-                {item.value}
-            </DataItemContainerValue>
-        </DataItemContainer>
+
+            <DataItemContainer>
+                <DataItemContainerKey className={clicked? "click": ''}>
+                    {item.key}
+                </DataItemContainerKey>
+                <DataItemContainerValue className={clicked? "click": ''}>
+                    {item.value}
+                </DataItemContainerValue>
+            </DataItemContainer>
+
+
     )
 }
 
