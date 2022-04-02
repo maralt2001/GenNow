@@ -3,17 +3,17 @@ import {ConfItems} from "./ImportData";
 import {useGlobalState} from "./ContentContainer";
 import styled from "styled-components";
 import {checkArrayDiffOrig,setPrefixConfItems, getKeyWithoutPrefix, isKeyEndsWith} from "../data/LoadFile";
-import {v4 } from 'uuid'
 import {DataItem} from "./DataItem";
-import {ColumnSetter} from "./ColumnSetter";
+import {ColumnSetter} from "./Setter/ColumnSetter";
+import {AliasSetter} from "./Setter/AliasSetter";
 
 /*MaterialUI*/
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/Edit';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import {Container, Stack, Box, TextField, CssBaseline, Accordion, AccordionDetails, AccordionSummary, IconButton, Chip, Typography}
-    from '@mui/material';
+import {Container, Stack, Box, TextField, CssBaseline, Accordion, AccordionDetails,
+    AccordionSummary, IconButton, Chip, Typography} from '@mui/material';
 
 
 
@@ -23,8 +23,20 @@ export interface EditColumnName{
     originColumn: string
     handleChange: Function
     handleConfirm: Function
-
 }
+
+export interface EditAliasName {
+    itemID: string
+    originAlias: string
+    handleChange: Function
+    handleConfirm: Function
+}
+
+export interface DataElementActive{
+    id: string
+    isActive: boolean
+}
+
 const DataWrapper = styled.div`
   position: relative;
   display: flex;
@@ -55,7 +67,6 @@ const DataBody = styled.div`
   flex-direction: column;
   width: 70%;
 `
-
 const DataItemContainerBody = styled.div`
   display: flex;
   flex-direction: column;
@@ -80,11 +91,12 @@ const Data = () => {
     //local state
     const [diffOrigin] = useState(checkArrayDiffOrig(data))
     const [activeItems, setActiveItems] = useState(new Array<string>())
-    const [dataItemClicked, setDataItemClicked] = useState('')
+    const [dataElementActive, setDataElementActive] = useState<DataElementActive>({id: "", isActive: false})
     const [expanded, setExpanded] = useState(false)
     const [activeFilter, setActiveFilter] = useState({active: false, typ: '' as string})
     const [dataFiltered, setDataFiltered] = useState(new Array<ConfItems>())
     const [editColumn, setEditColumn] = useState({active: false, columnName: '' as string})
+    const [editAlias, setEditAlias] = useState({active: false, aliasName: '' as string})
 
 
 
@@ -109,16 +121,8 @@ const Data = () => {
     }
 
     function handleClickDataItem(itemID:string) {
-        setDataItemClicked(itemID)
-        data.forEach(item => {
-            item.selected = false
-            if (item.meta.id === itemID) {
-                item.selected = !item.selected;
-            }
-
-        })
-        setData(data)
-
+        dataElementActive.id === itemID? setDataElementActive({id: "", isActive: false}):
+                                         setDataElementActive({id: itemID, isActive: true})
     }
 
     function handleClickFilter(itemID: string, filterName: string) {
@@ -154,6 +158,21 @@ const Data = () => {
                         break
                     }
                 }
+                case "alias": {
+                    if(result?.meta.alias !== undefined && !activeFilter.active) {
+
+                        let filter = data.filter(item => item.meta.alias === result?.meta.alias)
+                        setDataFiltered(filter)
+                        setActiveFilter({active: true, typ: filterName})
+                        break
+
+                    }
+                    else {
+
+                        setActiveFilter({active: false, typ: ''})
+                        break
+                    }
+                }
 
             }
 
@@ -166,6 +185,10 @@ const Data = () => {
         setEditColumn({active: !editColumn.active, columnName:''});
    }
 
+   function handleEditAlias() {
+        setEditAlias({active: !editAlias.active, aliasName: ''})
+   }
+
    function handleChangeEditColumn(value: string) {
         if(editColumn.active) {
             setEditColumn({active: true, columnName: value})
@@ -173,28 +196,49 @@ const Data = () => {
 
    }
 
+   function handleChangeEditAlias(value:string) {
+        if(editAlias.active) {
+            setEditAlias({active: true, aliasName: value})
+        }
+   }
+
    function handleConfirmEditColumn(similar:boolean) {
 
         if(editColumn.active && !similar) {
             setEditColumn({active: false, columnName: editColumn.columnName})
-            data.filter(item => item.meta.id === dataItemClicked).map(ele => ele.meta.column = editColumn.columnName)
+            data.filter(item => item.meta.id === dataElementActive.id).map(ele => ele.meta.column = editColumn.columnName)
         }
         if(editColumn.active && similar) {
 
             setEditColumn({active: false, columnName: editColumn.columnName})
             let key:string;
-            if(hasItemPrefix(dataItemClicked)) {
-                let item = data.filter(item => item.meta.id === dataItemClicked)[0]
+            if(hasItemPrefix(dataElementActive.id)) {
+                let item = data.filter(item => item.meta.id === dataElementActive.id)[0]
                 key = (getKeyWithoutPrefix(item))
             }
             else {
-                key = data.filter(item => item.meta.id === dataItemClicked)[0].key
+                key = data.filter(item => item.meta.id === dataElementActive.id)[0].key
 
             }
             data.filter(item => isKeyEndsWith(item,key)).map(ele => ele.meta.column = editColumn.columnName)
 
         }
 
+   }
+
+   function handleConfirmEditAlias(similar:boolean) {
+        if(editAlias.active && !similar) {
+            setEditAlias({active: false, aliasName: editAlias.aliasName})
+            data.filter(item => item.meta.id === dataElementActive.id).map(ele => ele.meta.alias = editAlias.aliasName)
+        }
+        if(editAlias.active && similar) {
+            setEditAlias({active: false, aliasName: editAlias.aliasName})
+
+            if(hasItemPrefix(dataElementActive.id)) {
+                const prefix = data.filter(item => item.meta.id === dataElementActive.id)[0].meta.prefix
+                data.filter(el => el.meta.prefix === prefix).map(ele => ele.meta.alias = editAlias.aliasName)
+            }
+        }
    }
 
    function hasItemPrefix(id: string): boolean {
@@ -211,6 +255,14 @@ const Data = () => {
         }
         return ""
 
+   }
+
+   function getItemAlias(id:string):string {
+       let item = data.filter(item => item.meta.id === id);
+       if(!!item[0].meta.alias) {
+           return item[0].meta.alias;
+       }
+       return ""
    }
 
 
@@ -237,7 +289,7 @@ const Data = () => {
                             Available data:
                         </Typography>
                         {diffOrigin.length > 0?
-                            diffOrigin.map(item => <Chip label={item} size="small" style={{color: "gainsboro"}} variant="outlined" color="primary" icon={<AttachFileIcon/>}
+                            diffOrigin.map(item => <Chip key={item} label={item} size="small" style={{color: "gainsboro"}} variant="outlined" color="primary" icon={<AttachFileIcon/>}
                                 onClick={(item) => handleClickOriginItem(item.currentTarget)}/>
                                 )
                             :"empty"}
@@ -249,8 +301,7 @@ const Data = () => {
                 <Stack direction="row" spacing={1} borderTop={2} borderColor={"grey.100"} >
                     <DataBody>
                     {activeItems.length > 0 && activeItems.map(item =>
-                        <React.Fragment key={v4()}>
-                            <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
+                            <Accordion key={item} expanded={expanded} onChange={() => setExpanded(!expanded)}>
                                 <AccordionSummary expandIcon={<ExpandMoreIcon/>}
                                                   aria-controls="panel1aContent"
                                                   id="panel1aHeader">
@@ -260,23 +311,24 @@ const Data = () => {
                                     {!activeFilter.active &&
                                     <DataItemContainerBody>
                                         {data.filter(ele => ele.meta.origin === item).map(e =>
-                                            <div onClick={() => handleClickDataItem(e.meta.id)} key={e.meta.id}>
-                                                <DataItem item={e} clicked={!!e.selected}/>
-                                            </div>
-
-                                        )}
+                                            <React.Fragment key={e.meta.id}>
+                                                <div onClick={() => handleClickDataItem(e.meta.id)}>
+                                                    <DataItem item={e} clicked={dataElementActive.isActive && e.meta.id === dataElementActive.id}/>
+                                                </div>
+                                            </React.Fragment>)}
                                     </DataItemContainerBody>}
                                     {activeFilter.active &&
                                     <DataItemContainerBody>
                                         {dataFiltered.map(e =>
-                                            <div onClick={() => handleClickDataItem(e.meta.id)} key={e.meta.id}>
-                                                <DataItem item={e} clicked={!!e.selected}/>
-                                            </div>
-                                        )}
+                                            <React.Fragment key={e.meta.id}>
+                                                <div onClick={() => handleClickDataItem(e.meta.id)}>
+                                                    <DataItem item={e} clicked={dataElementActive.isActive && e.meta.id === dataElementActive.id}/>
+                                                </div>
+                                            </React.Fragment>)}
                                     </DataItemContainerBody>}
                                 </AccordionDetails>
                             </Accordion>
-                        </React.Fragment>)}
+                        )}
                         </DataBody>
 
                 <Stack direction="column" padding={2} bgcolor={"whitesmoke"} overflow={"hidden"}>
@@ -286,14 +338,14 @@ const Data = () => {
                                    size="small"
                                    label="id"
                                    fullWidth
-                                   value={dataItemClicked}/>
+                                   value={dataElementActive.id}/>
                         <TextField disabled
                                    id="field-origin"
                                    size="small"
                                    label="origin"
                                    margin="normal"
                                    fullWidth
-                                   value={data.filter(item => item.meta.id === dataItemClicked).map(item => item.meta.origin)}/>
+                                   value={data.filter(item => item.meta.id === dataElementActive.id).map(item => item.meta.origin)}/>
                         <Stack direction="row" spacing={1}>
                                 <TextField disabled
                                            id="field-alias"
@@ -301,11 +353,11 @@ const Data = () => {
                                            label="alias"
                                            margin="normal"
                                            fullWidth
-                                           value={data.filter(item => item.meta.id === dataItemClicked).map(item => item.meta.alias)}/>
-                                <IconButton aria-label="edit-alias" color="secondary">
+                                           value={editAlias.active? editAlias.aliasName: data.filter(item => item.meta.id === dataElementActive.id).map(item => item.meta.alias)}/>
+                                <IconButton aria-label="edit-alias" color="secondary" onClick={() => handleEditAlias()}>
                                     <EditIcon/>
                                 </IconButton>
-                                <IconButton aria-label="filter-alias" color="primary">
+                                <IconButton aria-label="filter-alias" color={activeFilter.active && activeFilter.typ === "alias"? "success": "primary"} onClick={() => handleClickFilter(dataElementActive.id, "alias")}>
                                     <FilterAltIcon/>
                                 </IconButton>
                             </Stack>
@@ -316,14 +368,14 @@ const Data = () => {
                                            label="prefix"
                                            margin="normal"
                                            fullWidth
-                                           value={data.filter(item => item.meta.id === dataItemClicked).map(item => item.meta.prefix)}/>
+                                           value={data.filter(item => item.meta.id === dataElementActive.id).map(item => item.meta.prefix)}/>
                                 <IconButton aria-label="edit-prefix" color="secondary">
                                     <EditIcon/>
                                 </IconButton>
                                 <IconButton aria-label="filter-prefix"
                                             color={activeFilter.active && activeFilter.typ === "prefix"? "success": "primary"}
                                             onClick={() =>
-                                    handleClickFilter(dataItemClicked,"prefix")}>
+                                    handleClickFilter(dataElementActive.id,"prefix")}>
                                     <FilterAltIcon/>
                                 </IconButton>
                             </Stack>
@@ -334,19 +386,24 @@ const Data = () => {
                                            label="column"
                                            margin="normal"
                                            fullWidth
-                                           value={editColumn.active? editColumn.columnName: data.filter(item => item.meta.id === dataItemClicked).map(item => item.meta.column)}/>
+                                           value={editColumn.active? editColumn.columnName: data.filter(item => item.meta.id === dataElementActive.id).map(item => item.meta.column)}/>
                                 <IconButton aria-label="edit-column" color="secondary" onClick={() => handleEditColumn()}>
                                     <EditIcon/>
                                 </IconButton>
-                                <IconButton aria-label="filter-column" color={activeFilter.active && activeFilter.typ === "column"? "success": "primary"} onClick={() => handleClickFilter(dataItemClicked, "column")}>
+                                <IconButton aria-label="filter-column" color={activeFilter.active && activeFilter.typ === "column"? "success": "primary"} onClick={() => handleClickFilter(dataElementActive.id, "column")}>
                                     <FilterAltIcon/>
                                 </IconButton>
                             </Stack>
                         {editColumn.active && <ColumnSetter
-                            itemID={dataItemClicked}
-                            originColumn={getItemColumn(dataItemClicked)}
+                            itemID={dataElementActive.id}
+                            originColumn={getItemColumn(dataElementActive.id)}
                             handleChange={(value:string) => handleChangeEditColumn(value)}
                             handleConfirm={(similar:boolean) => handleConfirmEditColumn(similar)}/>}
+                        {editAlias.active && <AliasSetter
+                            itemID={dataElementActive.id}
+                            originAlias={getItemAlias(dataElementActive.id)}
+                            handleChange={(value:string) => handleChangeEditAlias(value)}
+                            handleConfirm={(similar:boolean) => handleConfirmEditAlias(similar)}/>}
                         </Box>
 
                     </Stack>

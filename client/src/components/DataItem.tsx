@@ -1,5 +1,5 @@
 
-import React, {useState} from "react";
+import React from "react";
 import {ConfItems} from "./ImportData";
 import styled from "styled-components";
 
@@ -18,12 +18,7 @@ const DataItemContainer = styled.div`
   justify-content: flex-start;
   &:hover {
     cursor: pointer;
-   
-    
   }
-  
- 
- 
 `
 const DataItemContainerKey = styled.div`
   display: flex;
@@ -43,7 +38,6 @@ const DataItemContainerKey = styled.div`
     opacity: 0.8;
     color: #73e038;
   }
-  
 `
 const DataItemContainerValue = styled.div`
   display: flex;
@@ -65,11 +59,7 @@ const DataItemContainerValue = styled.div`
   }
 `
 const DataItem = (props:dataItemProps) => {
-
-
     const {item, clicked} = props
-
-
     return(
 
             <DataItemContainer>
@@ -80,10 +70,7 @@ const DataItem = (props:dataItemProps) => {
                     {item.value}
                 </DataItemContainerValue>
             </DataItemContainer>
-
-
     )
 }
-
 
 export {DataItem}
