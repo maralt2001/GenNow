@@ -20,6 +20,7 @@ import {
 
 
 
+
 export interface EditColumnName{
     itemID: string
     originColumn: string
@@ -280,7 +281,16 @@ const Data = () => {
 
    }
 
-
+    async function SaveAsJson() {
+        let saveData = JSON.stringify(data,null,2)
+        let element = document.createElement('a');
+        element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(saveData));
+        element.setAttribute('download', "test.json");
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
 
     //Component unmount
     useEffect(() => {
@@ -413,7 +423,7 @@ const Data = () => {
                                 <Button disabled={!dataElementActive.isActive} variant="outlined" color="error" style={{background: "white"}}
                                         onClick={() => handleDeleteItem(dataElementActive.id)}>Delete Item</Button>
                                 <Button variant="outlined" color="primary" style={{background: "white"}}>Load Data</Button>
-                                <Button variant="outlined" color="secondary" style={{background: "white"}}>Save Data</Button>
+                                <Button variant="outlined" color="secondary" style={{background: "white"}} onClick={() => SaveAsJson()}>Save Data</Button>
                             </Stack>
                         {editColumn.active && <ColumnSetter
                             itemID={dataElementActive.id}
