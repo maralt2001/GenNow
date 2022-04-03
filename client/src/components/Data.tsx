@@ -298,18 +298,18 @@ const Data = () => {
             <CssBaseline/>
             {/* Header */}
             <Container maxWidth="xl" disableGutters>
-                {data.length !== 0 && <DataHeader>
+                <DataHeader>
                     <Stack direction="row" spacing={3} alignItems={"center"}>
                         <Typography variant="body2" display="block" color={"gainsboro"}>
                             Available data:
                         </Typography>
-                        {diffOrigin.length > 0?
+                        {diffOrigin.length > 0 && data.length !== 0?
                             diffOrigin.map(item => <Chip key={item} label={item} size="small" style={{color: "gainsboro"}} variant="outlined" color="primary" icon={<AttachFileIcon/>}
                                 onClick={(item) => handleClickOriginItem(item.currentTarget)}/>
                                 )
-                            :"empty"}
+                            :<Chip label="empty" size="small" style={{color: "gainsboro"}} variant="outlined" color="primary" icon={<AttachFileIcon/>}/>}
                     </Stack>
-                </DataHeader>}
+                </DataHeader>
             </Container>
             {/* Data Items & Meta */}
             <Container maxWidth="xl" disableGutters>
