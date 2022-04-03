@@ -12,8 +12,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/Edit';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import {Container, Stack, Box, TextField, CssBaseline, Accordion, AccordionDetails,
-    AccordionSummary, IconButton, Chip, Typography} from '@mui/material';
+import {
+    Container, Stack, Box, TextField, CssBaseline, Accordion, AccordionDetails,
+    AccordionSummary, IconButton, Chip, Typography, Button
+} from '@mui/material';
 
 
 
@@ -81,9 +83,6 @@ const DataItemContainerBody = styled.div`
   padding-top: 5px;
   
 `
-
-
-
 
 const Data = () => {
     //global state
@@ -229,14 +228,18 @@ const Data = () => {
    function handleConfirmEditAlias(similar:boolean) {
         if(editAlias.active && !similar) {
             setEditAlias({active: false, aliasName: editAlias.aliasName})
-            data.filter(item => item.meta.id === dataElementActive.id).map(ele => ele.meta.alias = editAlias.aliasName)
+            setItemAlias(dataElementActive.id)
         }
         if(editAlias.active && similar) {
             setEditAlias({active: false, aliasName: editAlias.aliasName})
 
             if(hasItemPrefix(dataElementActive.id)) {
+
                 const prefix = data.filter(item => item.meta.id === dataElementActive.id)[0].meta.prefix
                 data.filter(el => el.meta.prefix === prefix).map(ele => ele.meta.alias = editAlias.aliasName)
+            }
+            else {
+                setItemAlias(dataElementActive.id)
             }
         }
    }
@@ -265,6 +268,18 @@ const Data = () => {
        return ""
    }
 
+   function setItemAlias(id:string) {
+       data.filter(item => item.meta.id === id).map(ele => ele.meta.alias = editAlias.aliasName)
+   }
+
+   function handleDeleteItem(id: string) {
+       let temp = [...data]
+       let result = temp.filter(ele => ele.meta.id !== id).map(ele => ele)
+       setData(result)
+       setDataElementActive({id:"", isActive: false})
+
+   }
+
 
 
     //Component unmount
@@ -285,7 +300,7 @@ const Data = () => {
             <Container maxWidth="xl" disableGutters>
                 {data.length !== 0 && <DataHeader>
                     <Stack direction="row" spacing={3} alignItems={"center"}>
-                        <Typography variant="body2" display="block"  color={"gainsboro"}>
+                        <Typography variant="body2" display="block" color={"gainsboro"}>
                             Available data:
                         </Typography>
                         {diffOrigin.length > 0?
@@ -393,6 +408,12 @@ const Data = () => {
                                 <IconButton aria-label="filter-column" color={activeFilter.active && activeFilter.typ === "column"? "success": "primary"} onClick={() => handleClickFilter(dataElementActive.id, "column")}>
                                     <FilterAltIcon/>
                                 </IconButton>
+                            </Stack>
+                            <Stack mt={2} direction="row" spacing={2}>
+                                <Button disabled={!dataElementActive.isActive} variant="outlined" color="error" style={{background: "white"}}
+                                        onClick={() => handleDeleteItem(dataElementActive.id)}>Delete Item</Button>
+                                <Button variant="outlined" color="primary" style={{background: "white"}}>Load Data</Button>
+                                <Button variant="outlined" color="secondary" style={{background: "white"}}>Save Data</Button>
                             </Stack>
                         {editColumn.active && <ColumnSetter
                             itemID={dataElementActive.id}
