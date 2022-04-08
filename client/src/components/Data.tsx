@@ -2,10 +2,12 @@ import React, {useEffect, useState} from "react";
 import {ConfItems} from "./ImportData";
 import {useGlobalState} from "./ContentContainer";
 import styled from "styled-components";
-import {checkArrayDiffOrig,setPrefixConfItems, getKeyWithoutPrefix, isKeyEndsWith} from "../data/LoadFile";
+import {checkArrayDiffOrig, setPrefixConfItems, getKeyWithoutPrefix, isKeyEndsWith} from "../data/LoadFile";
 import {DataItem} from "./DataItem";
 import {ColumnSetter} from "./Setter/ColumnSetter";
 import {AliasSetter} from "./Setter/AliasSetter";
+import {PrefixSetter} from "./Setter/PrefixSetter";
+
 
 /*MaterialUI*/
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -17,10 +19,6 @@ import {
     AccordionSummary, IconButton, Chip, Typography, Button
 } from '@mui/material';
 
-
-
-
-
 export interface EditColumnName{
     itemID: string
     originColumn: string
@@ -31,6 +29,13 @@ export interface EditColumnName{
 export interface EditAliasName {
     itemID: string
     originAlias: string
+    handleChange: Function
+    handleConfirm: Function
+}
+
+export interface EditPrefixName {
+    itemID: string
+    originPrefix: string
     handleChange: Function
     handleConfirm: Function
 }
@@ -85,6 +90,8 @@ const DataItemContainerBody = styled.div`
   
 `
 
+
+
 const Data = () => {
     //global state
     const [data,setData] = useGlobalState('data')
@@ -97,6 +104,8 @@ const Data = () => {
     const [dataFiltered, setDataFiltered] = useState(new Array<ConfItems>())
     const [editColumn, setEditColumn] = useState({active: false, columnName: '' as string})
     const [editAlias, setEditAlias] = useState({active: false, aliasName: '' as string})
+    const [editPrefix, setEditPrefix] = useState({active: false, prefixName: '' as string})
+
 
 
 
@@ -181,12 +190,21 @@ const Data = () => {
     }
 
    function handleEditColumn() {
-
-        setEditColumn({active: !editColumn.active, columnName:''});
+        if(dataElementActive.isActive) {
+            setEditColumn({active: !editColumn.active, columnName:''});
+        }
    }
 
    function handleEditAlias() {
-        setEditAlias({active: !editAlias.active, aliasName: ''})
+        if(dataElementActive.isActive) {
+            setEditAlias({active: !editAlias.active, aliasName: ''})
+        }
+   }
+
+   function handleEditPrefix() {
+        if(dataElementActive.isActive) {
+            setEditPrefix({active: !editPrefix.active, prefixName: ''})
+        }
    }
 
    function handleChangeEditColumn(value: string) {
@@ -199,6 +217,12 @@ const Data = () => {
    function handleChangeEditAlias(value:string) {
         if(editAlias.active) {
             setEditAlias({active: true, aliasName: value})
+        }
+   }
+
+   function handleChangeEditPrefix(value: string) {
+        if(editPrefix.active) {
+            setEditPrefix({active: true, prefixName: value})
         }
    }
 
@@ -245,6 +269,25 @@ const Data = () => {
         }
    }
 
+   function handleConfirmEditPrefix(similar:boolean) {
+        if(editPrefix.active && !similar) {
+            setEditPrefix({active: false, prefixName: editPrefix.prefixName})
+            setItemPrefix(dataElementActive.id)
+
+        }
+        if(editPrefix.active && similar) {
+            setEditPrefix({active: false, prefixName: editPrefix.prefixName})
+
+            if(hasItemPrefix(dataElementActive.id)) {
+                const prefix = data.filter(item => item.meta.id === dataElementActive.id)[0].meta.prefix
+                data.filter(el => el.meta.prefix === prefix).map(ele => ele.meta.prefix = editPrefix.prefixName)
+            }
+            else {
+                setItemPrefix(dataElementActive.id)
+            }
+        }
+   }
+
    function hasItemPrefix(id: string): boolean {
        let item = data.filter(item => item.meta.id === id)[0];
        return item.meta.prefix !== undefined && item.meta.prefix !== "";
@@ -269,8 +312,20 @@ const Data = () => {
        return ""
    }
 
+   function getItemPrefix(id:string):string {
+        let item = data.filter(item => item.meta.id === id);
+        if(!!item[0].meta.prefix) {
+            return item[0].meta.prefix
+        }
+        return ""
+   }
+
    function setItemAlias(id:string) {
        data.filter(item => item.meta.id === id).map(ele => ele.meta.alias = editAlias.aliasName)
+   }
+
+   function setItemPrefix(id:string) {
+        data.filter(item => item.meta.id === id).map(ele => ele.meta.prefix = editPrefix.prefixName)
    }
 
    function handleDeleteItem(id: string) {
@@ -282,16 +337,26 @@ const Data = () => {
    }
 
     async function SaveAsJson() {
-        let saveData = JSON.stringify(data,null,2)
-        let element = document.createElement('a');
-        element.href = window.URL.createObjectURL(new Blob([saveData], {type: 'application/json'}))
-        element.download = "save.json"
-        element.innerHTML = "download"
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
+        if(data.length > 0) {
+            let saveData = JSON.stringify(data,null,2)
+            let element = document.createElement('a');
+            element.href = window.URL.createObjectURL(new Blob([saveData], {type: 'application/json'}))
+            element.download = "save.json"
+            element.innerHTML = "download"
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+        else {
+            return
+        }
+
     }
+
+
+
+
 
     //Component unmount
     useEffect(() => {
@@ -356,8 +421,25 @@ const Data = () => {
                             </Accordion>
                         )}
                         </DataBody>
-
+                {/*Global Filter & Edit, Filter meta data*/}
                 <Stack direction="column" padding={2} bgcolor={"whitesmoke"} overflow={"hidden"}>
+                    <Stack direction="row"
+                           padding={0.5}
+                           bgcolor={"rgba(20, 25, 64, .85)"}
+                           overflow={"hidden"}
+                           mb={2}
+                           spacing={3}
+                           border={1}
+                           borderRadius={1}
+                           borderColor={"rgba(20, 25, 64, .95)"}
+                           boxShadow={1} textOverflow={"ellipsis"}>
+                        <Typography variant="body2" display="block" color={"whitesmoke"}>
+                            Global Filter:
+                        </Typography>
+                        <Chip label="Alias"  size="small" style={{color: "white", background: "limegreen"}} variant="outlined" color="primary" icon={<FilterAltIcon/>}/>
+                        <Chip label="Prefix" size="small" style={{color: "white", background: "limegreen"}} variant="outlined" color="primary" icon={<FilterAltIcon/>}/>
+                        <Chip label="Column" size="small" style={{color: "white", background: "limegreen"}} variant="outlined" color="primary" icon={<FilterAltIcon/>}/>
+                    </Stack>
                     <Box sx={{maxWidth: 500}}>
                         <TextField disabled
                                    id="outlined-disabled"
@@ -395,7 +477,7 @@ const Data = () => {
                                            margin="normal"
                                            fullWidth
                                            value={data.filter(item => item.meta.id === dataElementActive.id).map(item => item.meta.prefix)}/>
-                                <IconButton aria-label="edit-prefix" color="secondary">
+                                <IconButton aria-label="edit-prefix" color="secondary" onClick={() => handleEditPrefix()}>
                                     <EditIcon/>
                                 </IconButton>
                                 <IconButton aria-label="filter-prefix"
@@ -413,18 +495,22 @@ const Data = () => {
                                            margin="normal"
                                            fullWidth
                                            value={editColumn.active? editColumn.columnName: data.filter(item => item.meta.id === dataElementActive.id).map(item => item.meta.column)}/>
-                                <IconButton aria-label="edit-column" color="secondary" onClick={() => handleEditColumn()}>
-                                    <EditIcon/>
-                                </IconButton>
-                                <IconButton aria-label="filter-column" color={activeFilter.active && activeFilter.typ === "column"? "success": "primary"} onClick={() => handleClickFilter(dataElementActive.id, "column")}>
-                                    <FilterAltIcon/>
-                                </IconButton>
+
+                                    <IconButton aria-label="edit-column" color="secondary" onClick={() => handleEditColumn()}>
+                                        <EditIcon/>
+                                    </IconButton>
+                                    <IconButton airia-label="filter-column"
+                                                color={activeFilter.active && activeFilter.typ === "column"? "success": "primary"}
+                                                onClick={() =>
+                                        handleClickFilter(dataElementActive.id, "column")}>
+                                        <FilterAltIcon/>
+                                    </IconButton>
                             </Stack>
                             <Stack mt={2} direction="row" spacing={2}>
                                 <Button disabled={!dataElementActive.isActive} variant="outlined" color="error" style={{background: "white"}}
                                         onClick={() => handleDeleteItem(dataElementActive.id)}>Delete Item</Button>
                                 <Button variant="outlined" color="primary" style={{background: "white"}}>Load Data</Button>
-                                <Button variant="outlined" color="secondary" style={{background: "white"}} onClick={() => SaveAsJson()}>Save Data</Button>
+                                <Button disabled={data.length === 0} variant="outlined" color="secondary" style={{background: "white"}} onClick={() => SaveAsJson()}>Save Data</Button>
                             </Stack>
                         {editColumn.active && <ColumnSetter
                             itemID={dataElementActive.id}
@@ -436,10 +522,13 @@ const Data = () => {
                             originAlias={getItemAlias(dataElementActive.id)}
                             handleChange={(value:string) => handleChangeEditAlias(value)}
                             handleConfirm={(similar:boolean) => handleConfirmEditAlias(similar)}/>}
+                        {editPrefix.active && <PrefixSetter
+                            itemID={dataElementActive.id}
+                            originPrefix={getItemPrefix(dataElementActive.id)}
+                            handleChange={(value:string) => handleChangeEditPrefix(value)}
+                            handleConfirm={(similar:boolean) => handleConfirmEditPrefix(similar)}/>}
                         </Box>
-
                     </Stack>
-
                 </Stack>
             </Container>
         </DataWrapper>

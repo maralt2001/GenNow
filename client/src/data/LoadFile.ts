@@ -64,6 +64,26 @@ function checkArrayDiffOrig(items: ConfItems[]):string[] {
 
 }
 
+function checkArrayDiffColumn(items: ConfItems[]):string[]  {
+    try {
+        let result = items.map(item => {
+            if(item.meta.column) {
+                return item.meta.column
+            }
+            else {
+                return ''
+            }
+        }).filter((val,index,self) => self.indexOf(val) === index )
+        return result.filter(item => item !== "")
+
+    }
+    catch {
+        return []
+    }
+
+
+}
+
 function setPrefixConfItems(items: ConfItems[]): ConfItems[] {
     //match only digits (without white space) from start and ends with underline (positive lookahead)
     //let regex = new RegExp('[^\\n]\\d*(?=_)');
@@ -89,4 +109,4 @@ function isKeyEndsWith(item: ConfItems, endsWith:string): boolean {
 
 
 export {loadFile,separator,separation, createArrayConfItems,
-    checkArrayDiffOrig, setPrefixConfItems, getKeyWithoutPrefix, isKeyEndsWith}
+    checkArrayDiffOrig, checkArrayDiffColumn, setPrefixConfItems, getKeyWithoutPrefix, isKeyEndsWith}
