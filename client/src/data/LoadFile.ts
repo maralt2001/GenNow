@@ -83,6 +83,47 @@ function checkArrayDiffColumn(items: ConfItems[]):string[]  {
 
 
 }
+function checkArrayDiffAlias(items: ConfItems[]):string[]  {
+    try {
+        let result = items.map(item => {
+            if(item.meta.alias) {
+                return item.meta.alias
+            }
+            else {
+                return ''
+            }
+        }).filter((val,index,self) => self.indexOf(val) === index )
+        return result.filter(item => item !== "")
+
+    }
+    catch {
+        return []
+    }
+
+
+}
+function checkArrayDiffPrefix(items: ConfItems[]):string[]  {
+    try {
+        let result = items.map(item => {
+            if(item.meta.prefix) {
+                return item.meta.prefix
+            }
+            else {
+                return ''
+            }
+        }).filter((val,index,self) => self.indexOf(val) === index )
+        return result.filter(item => item !== "")
+
+    }
+    catch {
+        return []
+    }
+
+
+}
+
+
+
 
 function setPrefixConfItems(items: ConfItems[]): ConfItems[] {
     //match only digits (without white space) from start and ends with underline (positive lookahead)
@@ -109,4 +150,4 @@ function isKeyEndsWith(item: ConfItems, endsWith:string): boolean {
 
 
 export {loadFile,separator,separation, createArrayConfItems,
-    checkArrayDiffOrig, checkArrayDiffColumn, setPrefixConfItems, getKeyWithoutPrefix, isKeyEndsWith}
+    checkArrayDiffOrig, checkArrayDiffAlias, checkArrayDiffPrefix, checkArrayDiffColumn, setPrefixConfItems, getKeyWithoutPrefix, isKeyEndsWith}

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {ConfItems} from "./ImportData";
+import {SelectedItems} from "./UI/GlobalFilter"
 import {useGlobalState} from "./ContentContainer";
 import styled from "styled-components";
 import {checkArrayDiffOrig, setPrefixConfItems, getKeyWithoutPrefix, isKeyEndsWith} from "../data/LoadFile";
@@ -7,6 +8,7 @@ import {DataItem} from "./DataItem";
 import {ColumnSetter} from "./Setter/ColumnSetter";
 import {AliasSetter} from "./Setter/AliasSetter";
 import {PrefixSetter} from "./Setter/PrefixSetter";
+import {GlobalFilter} from "./UI/GlobalFilter";
 
 
 /*MaterialUI*/
@@ -43,6 +45,12 @@ export interface EditPrefixName {
 export interface DataElementActive{
     id: string
     isActive: boolean
+}
+
+export interface GlobalFilterProps {
+    data: ConfItems[]
+    onChangeMetaValue: (items: SelectedItems) => void
+
 }
 
 const DataWrapper = styled.div`
@@ -109,6 +117,8 @@ const Data = () => {
 
 
 
+
+
     function handleClickOriginItem(item:HTMLDivElement) {
 
        //item is in activeItems => remove it
@@ -124,9 +134,6 @@ const Data = () => {
        }
        //Todo Filter
        setPrefixConfItems(data)
-
-
-
     }
 
     function handleClickDataItem(itemID:string) {
@@ -354,6 +361,31 @@ const Data = () => {
 
     }
 
+    function onGlobalFilterChanged(item: SelectedItems) {
+
+        if(dataElementActive.isActive) {
+            handleClickDataItem(dataElementActive.id)
+        }
+        if(item.selectedMeta === "column") {
+            let result = data.filter(items => items.meta.column === item.selectedValue)
+            setDataFiltered(result)
+            setActiveFilter({active: true, typ: "column"})
+
+        }
+        if(item.selectedMeta === "prefix") {
+            let result = data.filter(items => items.meta.prefix === item.selectedValue)
+            setDataFiltered(result)
+            setActiveFilter({active: true, typ: "prefix"})
+        }
+        if(item.selectedMeta === "alias") {
+            let result = data.filter(items => items.meta.alias === item.selectedValue)
+            setDataFiltered(result)
+            setActiveFilter({active: true, typ: "alias"})
+        }
+
+
+    }
+
 
 
 
@@ -425,20 +457,14 @@ const Data = () => {
                 <Stack direction="column" padding={2} bgcolor={"whitesmoke"} overflow={"hidden"}>
                     <Stack direction="row"
                            padding={0.5}
-                           bgcolor={"rgba(20, 25, 64, .85)"}
+                           bgcolor={"whitesmoke"}
                            overflow={"hidden"}
                            mb={2}
                            spacing={3}
-                           border={1}
                            borderRadius={1}
-                           borderColor={"rgba(20, 25, 64, .95)"}
-                           boxShadow={1} textOverflow={"ellipsis"}>
-                        <Typography variant="body2" display="block" color={"whitesmoke"}>
-                            Global Filter:
-                        </Typography>
-                        <Chip label="Alias"  size="small" style={{color: "white", background: "limegreen"}} variant="outlined" color="primary" icon={<FilterAltIcon/>}/>
-                        <Chip label="Prefix" size="small" style={{color: "white", background: "limegreen"}} variant="outlined" color="primary" icon={<FilterAltIcon/>}/>
-                        <Chip label="Column" size="small" style={{color: "white", background: "limegreen"}} variant="outlined" color="primary" icon={<FilterAltIcon/>}/>
+                           textOverflow={"ellipsis"}>
+
+                            <GlobalFilter data={data} onChangeMetaValue={(item) => onGlobalFilterChanged(item)}/>
                     </Stack>
                     <Box sx={{maxWidth: 500}}>
                         <TextField disabled
